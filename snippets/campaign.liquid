@@ -30,7 +30,7 @@
 {%-comment-%}========================================================={%-endcomment-%}
 
 {%-assign crowdfunding = product.metafields.global.fundingcampaign-%}
-{%-assign debug = false-%}
+{%-assign debug = false-%} {%comment%} Set to TRUE to output variables to template {%endcomment%}
 
 
 {%-comment-%}========================================================={%-endcomment-%}
@@ -41,9 +41,9 @@
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} SETUP general                                           {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
-  {%-assign currentDate   = "now" | date: "%s"-%}
-  {%-assign endDate       = product.metafields.global.campaignenddate-%}
-  {%-assign daysUntilDone = endDate | date: "%s" | minus: currentDate | divided_by: 3600 | divided_by: 24 | round  -%}
+  {%-assign currentDate    = "now" | date: "%s"-%}
+  {%-assign endDate        = product.metafields.global.campaignenddate-%}
+  {%-assign daysUntilDone  = endDate | date: "%s" | minus: currentDate | divided_by: 3600 | divided_by: 24 | round  -%}
   {%-assign hoursUntilDone = endDate | date: "%s" | minus: currentDate | divided_by: 3600 -%}
 
   {%-if debug-%}
@@ -53,11 +53,10 @@
   {%-comment-%}========================================================={%-endcomment-%}
 
   {%-comment-%}========================================================={%-endcomment-%}
-  {%-comment-%} SETUP for tiers as variants                             {%-endcomment-%}
+  {%-comment-%} SETUP goals                                             {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
   {%-assign totalAvail = product.metafields.global.totalavailableproducts-%}
 
-  {%-assign goal_mode   = "not_currency"-%}
   {%-assign goals       = product.metafields.global.goalamounts | split:','-%}
   {%-assign goalText    = product.metafields.global.goaltext | split:','-%}
   {%-comment-%}========================================================={%-endcomment-%}
@@ -147,7 +146,10 @@
   </section>
   
 
-  
+
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-comment-%} Build the Tiers                                         {%-endcomment-%}
+  {%-comment-%}========================================================={%-endcomment-%}  
   <h2 class="tiertop">Select your Tier</h2>
     {%-assign vc = 0%}
     {% for variant in product.variants %}
@@ -161,6 +163,10 @@
       </div>
     {% endfor %}
 
+
+    {%-comment-%}========================================================={%-endcomment-%}
+    {%-comment-%} our little JS snippet to update / select Tiers          {%-endcomment-%}
+    {%-comment-%}========================================================={%-endcomment-%}
     <script>
       function updateTier(variantId) {
         console.log(variantId);

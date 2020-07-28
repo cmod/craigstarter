@@ -1,0 +1,744 @@
+<!-- /templates/product.liquid -->
+<div itemscope itemtype="http://schema.org/Product" id="ProductSection" data-section-id="{{ section.id }}" data-section-type="product-template" data-image-zoom-type="{{ section.settings.product_image_zoom_type }}" data-show-extra-tab="{{ section.settings.show_extra_tab }}" data-extra-tab-content="{{ section.settings.extra_tab_content }}" data-cart-enable-ajax="{{ settings.cart_enable_ajax }}" data-enable-history-state="true">
+
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+  {%- assign fundingcamapign = product.metafields.global.fundingcampaign -%}
+
+  <div class="grid product-single {{ product.handle }}">
+
+    <div class="grid__item medium-up--one-whole titles">
+      <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
+
+      {% if product.metafields.global.fundingcampaign != 'true' %}
+      <p class="product-single__prices">
+        {% if product.compare_at_price_max > product.price %}
+          <span id="ComparePriceA11y" class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+        {% else %}
+          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+        {% endif %}
+        <span id="ProductPrice" class="product-single__price" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+          {{ current_variant.price | money }}
+        </span>
+
+        {% if product.compare_at_price_max > product.price %}
+          <span id="PriceA11y" class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          <s class="product-single__price--compare" id="ComparePrice">
+            {{ current_variant.compare_at_price | money }}
+          </s>
+        {% endif %}
+
+        {% include 'product-unit-price', variant: current_variant, available: true %}
+      </p>
+      {% endif %}
+
+    </div>
+
+    <div class="grid__item medium-up--two-thirds">
+      
+      {% for image in product.images %}
+        {% capture img_id %}ProductImage-{{ image.id }}{% endcapture %}
+        {% capture wrapper_id %}ProductImageWrapper-{{ image.id }}{% endcapture %}
+        {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+        {% include 'image-style' with image: image, width: 810, height: 675, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
+
+        <div id="{{ wrapper_id }}" class="product-single__featured-image-wrapper supports-js{% unless featured_image == image %} hidden{% endunless %}" data-image-id="{{ image.id }}">
+          <div class="product-single__photos" data-image-id="{{ image.id }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
+            <img id="{{ img_id }}"
+                 class="product-single__photo lazyload{% unless featured_image == image %} lazypreload{% endunless %}{% if section.settings.product_image_zoom_type == 'lightbox' %} lightbox{% endif %}"
+                 {% if section.settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ image | img_url: '1024x1024' }}"{% endif %}
+                 src="{{ image | img_url: '200x200' }}"
+                 data-src="{{ img_url }}"
+                 data-widths="[180, 360, 470, 600, 750, 940, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ image.aspect_ratio }}"
+                 data-sizes="auto"
+                 alt="{{ image.alt | escape }}">
+          </div>
+          {% if product.compare_at_price_max > product.price %}
+            <span class="badge badge--sale"><span>{{ 'products.product.on_sale' | t }}</span></span>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <noscript>
+        <img src="{{ featured_image | img_url: 'grande' }}" alt="{{ featured_image.alt | escape }}">
+      </noscript>
+
+      {% if product.images.size > 1 %}
+        <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
+
+          {% case product.images.size %}
+            {% when 2 %}
+              {% assign thumbnail_width = 'small--one-half medium-up--push-one-sixth medium-up--one-third' %}
+            {% when 4 %}
+              {% assign thumbnail_width = 'small--one-half medium-up--one-quarter' %}
+            {% else %}
+              {% assign thumbnail_width = 'small--one-third medium-up--one-fifth' %}
+          {% endcase %}
+
+          {% for image in product.images %}
+            <li class="grid__item {{ thumbnail_width }}">
+              <a href="{{ image.src | img_url: 'grande' }}" class="product-single__thumbnail" data-image-id="{{ image.id }}">
+                <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+              </a>
+            </li>
+          {% endfor %}
+
+        </ul>
+      {% endif %}
+
+      {% if section.settings.product_image_zoom_type == 'lightbox' %}
+        <ul class="gallery hidden">
+          {% for image in product.images %}
+            <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '2048x2048' }}"></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if product.metafields.global.fundingcampaign %}
+        <div class="product-single__description rte medium-up medium-only" itemprop="description">
+          {{ product.description }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="grid__item medium-up--one-third{% if product.images.size == 0%} medium-up--push-one-half{% endif %}">
+      <div class="product-single__meta small--text-center">
+
+        {% if section.settings.vendor_show %}
+          <p class="product-single__vendor" itemprop="brand">{{ product.vendor }}</p>
+        {% endif %}
+
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+
+          <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+
+
+          {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+            <div class="product-single__policies rte">
+              {%- if shop.taxes_included -%}
+                {{ 'products.product.include_taxes' | t }}
+              {%- endif -%}
+              {%- if shop.shipping_policy.body != blank -%}
+                {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- assign productClasses = 'product-form' -%}
+          {%- if product.has_only_default_variant -%}
+            {%- assign productClasses = productClasses | append: ' product-form--default-variant-only' -%}
+          {%- endif -%}
+
+          {%-comment-%}========================================================={%-endcomment-%}
+          {%-comment-%} Insert campaign code                                    {%-endcomment-%}
+          {%-comment-%}========================================================={%-endcomment-%}
+          {% render 'campaign', product: product %}
+
+          {%-comment-%}========================================================={%-endcomment-%}
+          {%-comment-%}some logic to hide the normal variant selector if we're running a campaign{%-endcomment-%}
+          {%-comment-%}========================================================={%-endcomment-%}
+          {%if product.metafields.global.fundingcampaign %}<div class="campaignform">{%endif%}
+            {% form 'product', product, class: productClasses %}
+              <select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants {%if product.metafields.global.fundingcampaign %}hideme{%endif%}">
+                {% for variant in product.variants %}
+                  {% if variant.available %}
+                    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                  {% else %}
+                    <option disabled="disabled">
+                      {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                    </option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+
+              {% if section.settings.product_quantity_enable %}
+                <div class="product-single__quantity">
+                  <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+                  <input type="number" id="Quantity" name="quantity" value="1" min="1">
+                </div>
+              {% endif %}
+
+              <div class="product-single__cart-submit-wrapper{% if section.settings.enable_payment_button %} product-single__shopify-payment-btn{% endif %}{% if section.settings.add_to_cart_width == 'full_width' %} product-form--full{% endif %}">
+                <button type="submit" name="add" id="AddToCart" class="btn product-single__cart-submit{% if section.settings.add_to_cart_width == 'full_width' %} btn--full{% endif %}{% if section.settings.enable_payment_button %} shopify-payment-btn btn--secondary{% endif %}" data-cart-url="{{ routes.cart_url }}">
+                  <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+                </button>
+                {% if section.settings.enable_payment_button %}
+                  {{ form | payment_button }}
+                {% endif %}
+              </div>
+
+            {% endform %}
+
+          {%if product.metafields.global.fundingcampaign %}</div>{%endif%}
+          {%-comment-%}========================================================={%-endcomment-%}
+          {%-comment-%}End variant selector form logic                          {%-endcomment-%}
+          {%-comment-%}========================================================={%-endcomment-%}
+
+        </div>
+
+        {% if section.settings.product_description_position == 'right' %}
+          {%- assign position = 'right' -%}
+          {% include 'product-description' %}
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+
+  {% if section.settings.product_description_position == 'below' %}
+    <div class="product-single__description rte  medium-up--two-thirds {%if product.metafields.global.fundingcampaign %}small-only{%endif%}" itemprop="description">
+      {{ product.description }}
+    </div>
+  {% endif %}
+</div>
+
+{% unless product == empty %}
+  <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+<script>
+  // Override default values of shop.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  window.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }}
+  }
+</script>
+
+
+
+{% schema %}
+{
+  "name": {
+    "da": "Produktsider",
+    "de": "Produktseiten",
+    "en": "Product pages",
+    "es": "Páginas de productos",
+    "fi": "Tuotesivut",
+    "fr": "Pages de produits",
+    "hi": "उत्पाद पेज",
+    "it": "Pagine di prodotto",
+    "ja": "商品ページ",
+    "ko": "제품 페이지",
+    "nb": "Produktsider",
+    "nl": "Productpagina's",
+    "pt-BR": "Páginas de produtos",
+    "pt-PT": "Páginas de produtos",
+    "sv": "Produktsidor",
+    "th": "หน้าสินค้า",
+    "zh-CN": "产品页面",
+    "zh-TW": "產品頁面"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "product_quantity_enable",
+      "label": {
+        "da": "Vis antalsvælger",
+        "de": "Mengenauswahl anzeigen",
+        "en": "Show quantity selector",
+        "es": "Mostrar selector de cantidad",
+        "fi": "Näytä määrän valitsin",
+        "fr": "Afficher le sélecteur de quantité",
+        "hi": "मात्रा चयनकर्ता दिखाएं",
+        "it": "Mostra selettore quantità",
+        "ja": "数量セレクターを表示する",
+        "ko": "수량 선택기 표시",
+        "nb": "Vis mengdevelger",
+        "nl": "Hoeveelheidskiezer weergeven",
+        "pt-BR": "Exiba um seletor de quantidade",
+        "pt-PT": "Mostrar um seletor de quantidade",
+        "sv": "Visa kvantitetsväljare",
+        "th": "แสดงตัวเลือกจำนวน",
+        "zh-CN": "显示数量选择器",
+        "zh-TW": "顯示數量選擇器"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "vendor_show",
+      "label": {
+        "da": "Vis produktleverandør",
+        "de": "Produktverkäufer anzeigen",
+        "en": "Show product vendor",
+        "es": "Mostrar proveedor del producto",
+        "fi": "Näytä tuotteen myyjä",
+        "fr": "Afficher le distributeur du produit",
+        "hi": "उत्पाद विक्रेता दिखाएं",
+        "it": "Mostra fornitore prodotto",
+        "ja": "商品の販売元を表示する",
+        "ko": "제품 공급 업체 표시",
+        "nb": "Vis produktleverandør",
+        "nl": "Productleverancier weergeven",
+        "pt-BR": "Exiba o fornecedor do produto",
+        "pt-PT": "Mostrar o fornecedor do produto",
+        "sv": "Visa produktsäljare",
+        "th": "แสดงผู้ขายสินค้า",
+        "zh-CN": "显示产品厂商",
+        "zh-TW": "顯示產品廠商"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "social_sharing_products",
+      "label": {
+        "da": "Aktivér deling for produkter",
+        "de": "Teilen von Produkten aktivieren",
+        "en": "Enable sharing for products",
+        "es": "Habilitar compartir para los productos",
+        "fi": "Ota tuotteiden jakaminen käyttöön.",
+        "fr": "Activer le partage pour les produits",
+        "hi": "उत्पादों के लिए शेयर करना सक्षम करें",
+        "it": "Permetti condivisione prodotti",
+        "ja": "商品の共有を有効にする",
+        "ko": "제품 공유 사용",
+        "nb": "Aktiver deling for produkter",
+        "nl": "Delen inschakelen voor producten",
+        "pt-BR": "Habilitar compartilhamento para produtos",
+        "pt-PT": "Ativar partilha para produtos",
+        "sv": "Aktivera delning för produkter",
+        "th": "เปิดใช้งานการแชร์สินค้า",
+        "zh-CN": "启用产品分享",
+        "zh-TW": "啟用產品分享"
+      },
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": {
+        "da": "Beskrivelse",
+        "de": "Beschreibung",
+        "en": "Description",
+        "es": "Descripción",
+        "fi": "Kuvaus",
+        "fr": "Description",
+        "hi": "विवरण",
+        "it": "Descrizione",
+        "ja": "説明",
+        "ko": "설명",
+        "nb": "Beskrivelse",
+        "nl": "Beschrijving",
+        "pt-BR": "Descrição",
+        "pt-PT": "Descrição",
+        "sv": "Beskrivning",
+        "th": "คำอธิบาย",
+        "zh-CN": "描述",
+        "zh-TW": "說明"
+      }
+    },
+    {
+      "type": "select",
+      "id": "product_description_position",
+      "label": {
+        "da": "Placering",
+        "de": "Position",
+        "en": "Position",
+        "es": "Posición",
+        "fi": "Sijainti",
+        "fr": "Position",
+        "hi": "स्थिति",
+        "it": "Posizione",
+        "ja": "位置",
+        "ko": "위치",
+        "nb": "Posisjon",
+        "nl": "Positie",
+        "pt-BR": "Posição",
+        "pt-PT": "Posição",
+        "sv": "Position",
+        "th": "ตำแหน่ง",
+        "zh-CN": "位置",
+        "zh-TW": "位置"
+      },
+      "default": "below",
+      "options": [
+        {
+          "value": "right",
+          "label": {
+            "da": "Til højre for billeder",
+            "de": "Rechte von Bildern",
+            "en": "Right of images",
+            "es": "A la derecha de las imágenes",
+            "fi": "Kuvien oikealla puolella",
+            "fr": "Droit d'images",
+            "hi": "इमेज की दाईं ओर",
+            "it": "A destra delle immagini",
+            "ja": "画像の右",
+            "ko": "이미지의 오른쪽",
+            "nb": "Til høyre for bildet",
+            "nl": "Rechts van afbeeldingen",
+            "pt-BR": "Direito de imagens",
+            "pt-PT": "À direita das imagens",
+            "sv": "Höger om bilder",
+            "th": "ด้านขวาของภาพ",
+            "zh-CN": "图片右侧",
+            "zh-TW": "圖片右方"
+          }
+        },
+        {
+          "value": "below",
+          "label": {
+            "da": "Under billeder",
+            "de": "Unter Bildern",
+            "en": "Below images",
+            "es": "Debajo de las imágenes",
+            "fi": "Kuvien alapuolella",
+            "fr": "Sous les images",
+            "hi": "इमेज के नीचे",
+            "it": "Sotto le immagini",
+            "ja": "画像の下",
+            "ko": "아래 이미지",
+            "nb": "Under bildet",
+            "nl": "Onder afbeeldingen",
+            "pt-BR": "Imagens abaixo",
+            "pt-PT": "Abaixo das imagens",
+            "sv": "Under bilder",
+            "th": "ด้านล่างของภาพ",
+            "zh-CN": "图片下方",
+            "zh-TW": "圖片下方"
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_extra_tab",
+      "label": {
+        "da": "Vis en fane ved siden af din produktbeskrivelse",
+        "de": "Ein Tab neben Ihrer Produktbeschreibung anzeigen",
+        "en": "Show a tab next to your product description",
+        "es": "Mostrar una pestaña al lado de la descripción de tu producto",
+        "fi": "Näytä tuotekuvauksen vieressä oleva välilehti",
+        "fr": "Afficher un onglet à côté de la description de votre produit",
+        "hi": "आपके उत्पाद विवरण के आगे टैब दिखाएं",
+        "it": "Mostra una scheda accanto alla descrizione del prodotto",
+        "ja": "商品説明の横にタブを表示する",
+        "ko": "제품 설명 옆에 탭 표시",
+        "nb": "Vis en fane ved siden av produktbeskrivelsen",
+        "nl": "Laat tabblad zien naast je productbeschrijving",
+        "pt-BR": "Exibir uma aba ao lado da descrição do seu produto",
+        "pt-PT": "Mostrar um separador ao lado da sua descrição do produto",
+        "sv": "Visa en flik intill produktbeskrivningen",
+        "th": "แสดงแท็บถัดจากคำอธิบายสินค้าของคุณ",
+        "zh-CN": "显示产品描述旁边的标签",
+        "zh-TW": "於產品說明旁邊顯示索引標籤"
+      },
+      "default": false
+    },
+    {
+      "type": "page",
+      "id": "extra_tab_content",
+      "label": {
+        "da": "Fanens indhold",
+        "de": "Tab-Inhalt",
+        "en": "Tab content",
+        "es": "Contenido de la pestaña",
+        "fi": "Välilehden sisältö",
+        "fr": "Contenu de l'onglet",
+        "hi": "टैब सामग्री",
+        "it": "Contenuto della scheda",
+        "ja": "タブのコンテンツ",
+        "ko": "탭 콘텐츠",
+        "nb": "Faneinnhold",
+        "nl": "Content tabblad",
+        "pt-BR": "Conteúdo da aba",
+        "pt-PT": "Conteúdo do separador",
+        "sv": "Flikens innehåll",
+        "th": "เนื้อหาแท็บ",
+        "zh-CN": "标签内容",
+        "zh-TW": "索引標籤內容"
+      },
+      "info": {
+        "da": "Dette sideindhold vises i den ekstra fane.",
+        "de": "Der Inhalt dieser Seite wird auf der zusätzlichen Registerkarte angezeigt.",
+        "en": "This page content will appear in the extra tab.",
+        "es": "El contenido de esta página aparecerá en la pestaña adicional.",
+        "fi": "Tämä sivun sisältö näkyy ylimääräisessä välilehdessä.",
+        "fr": "Le contenu de cette page s'affichera dans l'onglet supplémentaire.",
+        "hi": "यह पृष्ठ सामग्री अतिरिक्त टैब में दिखाई देगी.",
+        "it": "Il contenuto di questa pagina verrà visualizzato nella scheda aggiuntiva.",
+        "ja": "このページのコンテンツは追加のタブに表示されます。",
+        "ko": "이 페이지 콘텐츠는 추가 탭에 나타납니다.",
+        "nb": "Dette sideinnholdet vil vises i ekstrafanen.",
+        "nl": "De content van deze pagina verschijnt in het extra tabblad.",
+        "pt-BR": "O conteúdo dessa página aparecerá na aba extra.",
+        "pt-PT": "O conteúdo desta página vai aparecer no separador adicional.",
+        "sv": "Sidinnehållet visas i fliken Extra.",
+        "th": "เนื้อหาของหน้านี้จะปรากฏในแท็บพิเศษ",
+        "zh-CN": "此页内容将显示在额外标签中。",
+        "zh-TW": "此頁面內容將出現在額外索引標籤。"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "da": "Udvalgt billede",
+        "de": "Feature-Bild",
+        "en": "Featured image",
+        "es": "Imagen destacada",
+        "fi": "Esittelykuva",
+        "fr": "Image vedette",
+        "hi": "फ़ीचर इमेज",
+        "it": "Immagine in evidenza",
+        "ja": "記事のサムネイル",
+        "ko": "추천 이미지",
+        "nb": "Utvalgt bilde",
+        "nl": "Uitgelichte afbeelding",
+        "pt-BR": "Imagem em destaque",
+        "pt-PT": "Imagem em destaque",
+        "sv": "Utvald bild",
+        "th": "รูปภาพที่แสดง",
+        "zh-CN": "配图",
+        "zh-TW": "特色圖片"
+      }
+    },
+    {
+      "type": "select",
+      "id": "product_image_zoom_type",
+      "label": {
+        "da": "Zoomtype",
+        "de": "Zoomtyp",
+        "en": "Zoom type",
+        "es": "Tipo de zoom",
+        "fi": "Zoomaustyyppi",
+        "fr": "Type de zoom",
+        "hi": "ज़ूम का प्रकार",
+        "it": "Tipo di zoom",
+        "ja": "ズームタイプ",
+        "ko": "확대 유형",
+        "nb": "Zoomtype",
+        "nl": "Type zoom",
+        "pt-BR": "Tipo de zoom",
+        "pt-PT": "Tipo de zoom",
+        "sv": "Zoomtyp",
+        "th": "ประเภทการซูมภาพ",
+        "zh-CN": "缩放类型",
+        "zh-TW": "縮放類型"
+      },
+      "options": [
+        {
+          "value": "lightbox",
+          "label": {
+            "da": "Lightbox",
+            "de": "Leuchtkasten",
+            "en": "Lightbox",
+            "es": "Lightbox",
+            "fi": "Lightbox-valotaulu",
+            "fr": "Visionneuse d'image",
+            "hi": "लाइटबॉक्स",
+            "it": "Lightbox",
+            "ja": "Lightbox",
+            "ko": "라이트 박스",
+            "nb": "Lysboks",
+            "nl": "Lightbox",
+            "pt-BR": "Lightbox",
+            "pt-PT": "Lightbox",
+            "sv": "Ljuslåda",
+            "th": "Lightbox",
+            "zh-CN": "灯箱",
+            "zh-TW": "燈箱"
+          }
+        },
+        {
+          "value": "zoom-in",
+          "label": {
+            "da": "Zoom ind",
+            "de": "Heranzoomen",
+            "en": "Zoom-in",
+            "es": "Acercar",
+            "fi": "Lähennä",
+            "fr": "Zoom avant",
+            "hi": "ज़ूम-इन",
+            "it": "Zoom avanti",
+            "ja": "ズームイン",
+            "ko": "확대",
+            "nb": "Zoom inn",
+            "nl": "Inzoomen",
+            "pt-BR": "Mais zoom",
+            "pt-PT": "Mais zoom",
+            "sv": "Zooma in",
+            "th": "ซูมเข้า",
+            "zh-CN": "缩小",
+            "zh-TW": "放大"
+          }
+        },
+        {
+          "value": "none",
+          "label": {
+            "da": "Ingen zoom",
+            "de": "Nicht zoomen",
+            "en": "No zoom",
+            "es": "Sin zoom",
+            "fi": "Ei zoomausta",
+            "fr": "Pas de zoom",
+            "hi": "कोई ज़ूम नहीं",
+            "it": "Nessun zoom",
+            "ja": "ズームなし",
+            "ko": "확대 없음",
+            "nb": "Ingen zoom",
+            "nl": "Geen zoom",
+            "pt-BR": "Sem zoom",
+            "pt-PT": "Sem zoom",
+            "sv": "Ingen zoom",
+            "th": "ไม่มีการซูม",
+            "zh-CN": "无缩放",
+            "zh-TW": "無縮放"
+          }
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": {
+        "da": "Knappen Læg i indkøbskurven",
+        "de": "Schaltfläche In den Warenkorb",
+        "en": "Add to cart button",
+        "es": "Añadir al carrito",
+        "fi": "Lisää ostoskoriin -painike",
+        "fr": "Bouton d'ajout au panier",
+        "hi": "कार्ट बटन में जोड़ें",
+        "it": "Pulsante \"Aggiungi al carrello\"",
+        "ja": "カートボタンに追加する",
+        "ko": "카트 버튼에 추가",
+        "nb": "Legg i handlekurv-knapp",
+        "nl": "Knop aan winkelwagen toevoegen",
+        "pt-BR": "Botão Adicionar ao carrinho",
+        "pt-PT": "Botão Adicionar ao carrinho",
+        "sv": "Lägg i varukorgen-knappen",
+        "th": "ปุ่มเพิ่มลงในตะกร้าสินค้า",
+        "zh-CN": "“添加到购物车”按钮",
+        "zh-TW": "加入購物車按鈕"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_payment_button",
+      "label": {
+        "da": "Vis dynamisk betalingsknap",
+        "de": "Dynamischen Checkout Button anzeigen",
+        "en": "Show dynamic checkout button",
+        "es": "Mostrar botón de pago dinámico",
+        "fi": "Näytä dynaaminen kassapainike",
+        "fr": "Afficher le bouton de paiement dynamique",
+        "hi": "डायनेमिक चेकआउट बटन दिखाएं",
+        "it": "Mostra pulsante di check-out dinamico",
+        "ja": "動的チェックアウトボタンを表示する",
+        "ko": "동적 결제 버튼 표시",
+        "nb": "Vis dynamisk knapp for å gå til kassen",
+        "nl": "Dynamische betaalknop weergeven",
+        "pt-BR": "Exibir botão de checkout dinâmico",
+        "pt-PT": "Mostrar o botão dinâmico de finalização da compra",
+        "sv": "Visa dynamiska utcheckningsknappar",
+        "th": "แสดงปุ่มชำระเงินแบบไดนามิก",
+        "zh-CN": "显示动态结账按钮",
+        "zh-TW": "顯示動態結帳按鈕"
+      },
+      "info": {
+        "da": "Den enkelte kunde vil se sin foretrukne betalingsmetode blandt dem, der er tilgængelige i din butik, f.eks. PayPal eller Apple Pay. [Få mere at vide](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "de": "Jeder Kunde sieht seine bevorzugte Zahlungsmethode aus den in Ihrem Shop verfügbaren Zahlungsmethoden wie PayPal oder Apple Pay. [Mehr Infos](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "en": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "es": "Cada cliente verá su forma de pago preferida entre las disponibles en tu tienda, como PayPal o Apple Pay. [Más información](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "fi": "Kukin asiakas näkee ensisijaisen valintansa kauppasi tarjoamista maksutavoista, esim. PayPal tai Apple Pay. [Lisätietoja](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "fr": "Chaque client verra son moyen de paiement préféré parmi ceux qui sont proposés sur votre boutique, tels que PayPal ou Apple Pay. [En savoir plus](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "hi": "प्रत्येक ग्राहक आपके स्टोर पर उपलब्ध अपनी पसंदीदा भुगतान की विधि देखेंगे जैसे PayPal या Apple Pay. [अधिक जानें](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "it": "Ogni cliente vedrà il suo metodo di pagamento preferito tra quelli disponibili nel tuo negozio, come PayPal o Apple Pay. [Maggiori informazioni](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "ja": "PayPalやApple Payなど、ストアで利用可能な希望の決済方法がお客様に表示されます。[もっと詳しく](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "ko": "각 고객은 PayPal 또는 Apple Pay와 같이 스토어에서 사용 가능한 지불 방법을 확인할 수 있습니다. [자세히 알아보기](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "nb": "Hver enkelt kunde vil se sin foretrukne betalingsmåte blant de som er tilgjengelig i butikken din, som PayPal eller Apple Pay. [Finn ut mer](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "nl": "Elke klant ziet zijn of haar beschikbare voorkeursmethode om af te rekenen, zoals PayPal of Apple Pay. [Meer informatie](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "pt-BR": "Cada cliente verá a forma de pagamento preferencial dele dentre as disponíveis na loja, como PayPal ou Apple Pay. [Saiba mais](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "pt-PT": "Cada cliente irá ver o seu método de pagamento preferido entre os disponíveis na loja, como o PayPal ou Apple Pay. [Saiba mais](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "sv": "Varje kund kommer att se den föredragna betalningsmetoden från de som finns tillgängliga i din butik, till exempel PayPal eller Apple Pay. [Läs mer](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "th": "ลูกค้าแต่ละรายจะเห็นวิธีการชำระเงินที่ต้องการจากวิธีที่ใช้ได้ในร้านค้าของคุณ เช่น PayPal หรือ Apple Pay [ดูข้อมูลเพิ่มเติม](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "zh-CN": "每位客户都可在您商店提供的付款方式中看到他们的首选付款方式，例如 PayPal 或 Apple Pay。[了解详细信息](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "zh-TW": "每位顧客都可以在您商店內開放使用的付款方式中看見他們偏好使用的方式，如 PayPal、Apple Pay 等。[深入瞭解相關資訊](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+      },
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "add_to_cart_width",
+      "label": {
+        "da": "Knapstørrelse",
+        "de": "Schaltflächengröße",
+        "en": "Button size",
+        "es": "Tamaño del botón",
+        "fi": "Painikkeen koko",
+        "fr": "Taille du bouton",
+        "hi": "बटन का आकार",
+        "it": "Dimensione pulsante",
+        "ja": "ボタンのサイズ",
+        "ko": "버튼 사이즈",
+        "nb": "Knappestørrelse",
+        "nl": "Afmeting knop",
+        "pt-BR": "Tamanho do botão",
+        "pt-PT": "Tamanho do botão",
+        "sv": "Knappstorlek",
+        "th": "ขนาดปุ่ม",
+        "zh-CN": "按钮大小",
+        "zh-TW": "按鈕尺寸"
+      },
+      "options": [
+        {
+          "value": "regular",
+          "label": {
+            "da": "Almindelig",
+            "de": "Regulär",
+            "en": "Regular",
+            "es": "Normal",
+            "fi": "Normaali",
+            "fr": "Normal",
+            "hi": "नियमित",
+            "it": "Regolare",
+            "ja": "通常",
+            "ko": "일반",
+            "nb": "Vanlig",
+            "nl": "Standaard",
+            "pt-BR": "Regular",
+            "pt-PT": "Normal",
+            "sv": "Regelbunden",
+            "th": "ปกติ",
+            "zh-CN": "一般设置",
+            "zh-TW": "標準"
+          }
+        },
+        {
+          "value": "full_width",
+          "label": {
+            "da": "Fuld bredde",
+            "de": "Volle Breite",
+            "en": "Full width",
+            "es": "Ancho completo",
+            "fi": "Täysi leveys",
+            "fr": "Pleine largeur",
+            "hi": "पूर्ण चौड़ाई",
+            "it": "Intera larghezza",
+            "ja": "全幅",
+            "ko": "전체 폭",
+            "nb": "Full bredde",
+            "nl": "Volledige breedte",
+            "pt-BR": "Largura completa",
+            "pt-PT": "Largura total",
+            "sv": "Full bredd",
+            "th": "เต็มความกว้าง",
+            "zh-CN": "全宽",
+            "zh-TW": "全寬度"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

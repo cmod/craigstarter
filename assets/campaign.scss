@@ -1,165 +1,173 @@
-/*  =============================
-    Alright, let's clone kickstarter
+/*  ==========================================================
+    Craigstarter 1.0, August 2020
+
+    Alright, let's clone a better Kickstarter in Shopify
+
 */
 
-.tiertop { 
-  border-top: 0px solid #ddd; 
-  margin-top: 30px;
-  padding-top: 30px;
-  text-align: center;
-  }
-
-.tier { 
-  border: 3px solid #EDE6E3;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: #EDE6E3;
-  padding: 10px;
-  overflow: hidden;
-  position: relative;
-
-  &.soldout { 
-    background-color: #dcdcdc; border-color: #dcdcdc; color: #aaa; 
-    h3 { color: #aaa; }
-    h4 { color: #aaa; }
-    &:hover { border-color: #dcdcdc; cursor: default; }
-    }
-
-  h3 { font-family: sans-serif; font-weight: bold; }
-  h4 { font-family: sans-serif; text-transform: none; }
-
-  .remaining { color: #888; }
-
-  &:hover { cursor: pointer; border-color: #ded5d1; }
-
-  &.active { 
-    border-color: #ded5d1; 
-    background-color: #f7f2f0; 
-    
-    .ribbon {
-      margin: 0;
-      padding: 0;
-      background: #7f00ff;
-      color:white;
-      padding: .2em 0;
-      font-size: .8em;
-      position: absolute;
-      top:0;
-      right:0;
-      transform: translateX(30%) translateY(0%) rotate(45deg);
-      transform-origin: top left;
-      display: block;
-    }
-    .ribbon:before,
-    .ribbon:after {
-      content: '';
-      position: absolute;
-      top:0;
-      margin: 0 -1px; /* tweak */
-      width: 100%;
-      height: 100%;
-      background: #7f00ff;
-    }
-    .ribbon:before {
-      right:100%;
-    }
-
-    .ribbon:after {
-      left:100%;
-    }
-  }
-
-  .ribbon { display: none; }
-
-  }
 
 
-.compared { font-weight: normal; font-size: .8em; }
+/*  ==========================================================
+    Tier design — to make those fancy tier buttons and "selected" states
+*/
+    .tiertop { 
+      border-top: 0px solid #ddd; 
+      margin-top: 30px;
+      padding-top: 30px;
+      text-align: center;
+      }
 
-
-
-.craigstarter {
-  padding: 4%;
-  background-color: #f7f7f9;
-  color: #333;
-  margin-bottom:20px;
-  clear: both;
-  border-radius: 5px;
-
-  .totalsold { 
-    font-weight: normal;
-   }
-
-  .daysleft {
-    font-size: 2rem;
-    line-height: .9em;
-    display: block;
-    color: #353442;
-    margin-bottom: 30px;
-    margin-top: 0px;
-  }
-
-  .g-meter {
-    height: 24px;
-    width: 100%;
-    position: relative;
-    background-color: #fff;
-    overflow: hidden;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-   
-    span {
-      display: block;
-      height: 100%;
-      width: 0;
-      background-color: #1626f5;
-      position: absolute;
-      top: 0; left: 0;
+    .tier { 
+      border: 3px solid #EDE6E3;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      background-color: #EDE6E3;
+      padding: 10px;
       overflow: hidden;
-      border-radius: 0 3px 3px 0;
-      transition: width 3s;
-    }
-  }
+      position: relative;
 
-  .g-label {
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
+      &.soldout { 
+        background-color: #dcdcdc; border-color: #dcdcdc; color: #aaa; 
+        h3 { color: #aaa; }
+        h4 { color: #aaa; }
+        &:hover { border-color: #dcdcdc; cursor: default; }
+        }
 
-  .pending {  
-    .g-meter {
-      span {
-        background-color: #dfdfdf;
-      }
-    }
-    .g-label { 
-      color: #dfdfdf;
-      font-weight: normal;
-    }  
-  }
+      h3 { font-family: sans-serif; font-weight: bold; }
+      h4 { font-family: sans-serif; text-transform: none; }
 
-  .complete {
-    .g-meter {
-      span {
-        background-color: #a1eca3;
-        text-align: right;
-        max-width: 100%;
-        padding-right: 5px;
-      }
-      .checkmark { 
-        color: #fff;
-        display: inline-block;
+      .remaining { color: #888; }
+
+      &:hover { cursor: pointer; border-color: #ded5d1; }
+
+      &.active { 
+        border-color: #ded5d1; 
+        background-color: #f7f2f0; 
         
-        text-align: right;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: bold;
-        font-size: .8em;
-        line-height: 20px;
+        .ribbon {
+          margin: 0;
+          padding: 0;
+          background: #7f00ff;
+          color:white;
+          padding: .2em 0;
+          font-size: .8em;
+          position: absolute;
+          top:0;
+          right:0;
+          transform: translateX(30%) translateY(0%) rotate(45deg);
+          transform-origin: top left;
+          display: block;
+        }
+        .ribbon:before,
+        .ribbon:after {
+          content: '';
+          position: absolute;
+          top:0;
+          margin: 0 -1px; /* tweak */
+          width: 100%;
+          height: 100%;
+          background: #7f00ff;
+        }
+        .ribbon:before {
+          right:100%;
+        }
+
+        .ribbon:after {
+          left:100%;
+        }
+      }
+
+      .ribbon { display: none; }
+
+      }
+
+
+    .compared { font-weight: normal; font-size: .8em; }
+
+
+
+/*  ==========================================================
+    Fancy goals box above tiers
+*/
+    .craigstarter {
+      padding: 4%;
+      background-color: #f9f9f9;
+      color: #000;
+      margin-bottom:20px;
+      clear: both;
+      border-radius: 5px;
+
+      .totalsold { 
+        font-weight: normal;
+       }
+
+      .daysleft {
+        font-size: 2em;
+        line-height: .9em;
+        display: block;
+        color: #353442;
+        margin-bottom: 30px;
+        margin-top: 0px;
+      }
+
+      .g-meter {
+        height: 24px;
         width: 100%;
+        position: relative;
+        background-color: #fff;
+        overflow: hidden;
+        border: 1px solid #ffffff;
+        border-radius: 4px;
+       
+        span {
+          display: block;
+          height: 100%;
+          width: 0;
+          background-color: #1626f5;
+          position: absolute;
+          top: 0; left: 0;
+          overflow: hidden;
+          border-radius: 3px;
+        }
+      }
+
+      .g-label {
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .pending {  
+        .g-meter {
+          span {
+            background-color: #dfdfdf;
+          }
+        }
+        .g-label { 
+          color: #dfdfdf;
+          font-weight: normal;
+        }  
+      }
+
+      .complete {
+        .g-meter {
+          span {
+            background-color: #a1eca3;
+            text-align: right;
+            max-width: 100%;
+            padding-right: 5px;
+          }
+          .checkmark { 
+            color: #fff;
+            display: inline-block;
+            
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            font-size: .8em;
+            line-height: 20px;
+            width: 100%;
+          }
+        } 
       }
     }
-    
-  }
-
-}

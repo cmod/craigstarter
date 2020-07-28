@@ -1,10 +1,24 @@
 # craigstarter
 
-A kickstarter-like experience for Shopify
+An indie kickstarter-like experience for Shopify
 
 ## Installing
 
+Note: The included `product-template.liquid` file is based off the "Simple" theme. You'll have to modify it if you're using something else. 
+
 I've tried to make this as simple as possible to install / setup without it being a plugin. 
+
+Place `camapign.liquid` into your template `snippets` folder. 
+
+Place `campaign.scss` into your template `assets` folder.
+
+Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
+
+Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
+
+The campaign sidebar is rendered using the following line: 
+`{% render 'campaign', product: product %}`
+
 
 
 ### Variables / Metafields
@@ -27,15 +41,21 @@ All variables used by the Craigstarter snippet to run a campaign are set using p
 
 `campaigninfo:` text blob appearing below goals, can contain html, et cetera
 
-FOR VARIANTS: 
-variantdescription: The extended description appearing in the selection box
+#### For variants
+
+`variantdescription:` The extended description appearing in the selection box
+`totalquantity:` Total number of available items for this variant; 
+  sales calculated based on totalquanity - remaining inventory 
 
 ----
 
 Metafields can be easily edited without a plugin using the following url structure: 
 
-For products: 
-https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.campaigninfo
+#### For products: 
 
-For variants: 
-https://YOURSHOP.myshopify.com/admin/bulk?resource_name=ProductVariant&edit=metafields.global.variantdescription
+`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.campaigninfo`
+
+#### For variants: 
+
+`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=ProductVariant&edit=metafields.global.variantdescription,metafields.global.totalquantity
+`
