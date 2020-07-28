@@ -29,7 +29,7 @@ Kickstarter is better than Craigstarter in the following ways:
 
 ## Installing
 
-Note: The included `product-template.liquid` file is based off the "Simple" Shopify theme. You'll have to modify the template if you're using a different theme. 
+Note: The included `snippets/product-template.liquid` file is based off the "Simple" Shopify theme. You'll have to modify your own `product-template.liquid` file if you're using a different theme. 
 
 I've tried to make this as simple as possible to install / setup without it being a plugin (hence affording you the most flexibility / necessary modifications). 
 
@@ -45,11 +45,11 @@ The campaign sidebar is rendered using the following line in product-template:
 
 
 ### Variables / Metafields
-All variables used by the Craigstarter snippet to run a campaign are set using product / variant metafields. 
+All variables used by the Craigstarter snippet to run a campaign are set using a combination of product and variant-specific metafields. 
 
-#### For products
+#### Product Metafields
 
-`fundingcampaign:` TRUE = running campaign 
+`fundingcampaign:` TRUE = running campaign; campaign code will not execute unless this is set to true
 
 `campaignenddate:` when the campaign ends in format of : 
   YEAR-MO-DA HR:MN, i.e., 2020-08-15 22:30
@@ -64,15 +64,18 @@ All variables used by the Craigstarter snippet to run a campaign are set using p
 
 `campaigninfo:` text blob appearing below goals, can contain html, et cetera
 
-#### For variants
+#### Variants Metafields
 
 `variantdescription:` The extended description appearing in the selection box
+
 `totalquantity:` Total number of available items for this variant; 
   sales calculated based on totalquanity - remaining inventory 
 
 ----
 
-Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure: 
+Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own Metafields editor with the appropriate fields ready to be filled in. 
+
+Save these URLs as bookmarks to edit / modify as needed. 
 
 #### For products: 
 
