@@ -128,12 +128,19 @@
 
     {%-assign gcount = 0-%}
     {%-assign gactive = 0-%}
+    {%-assign gpercentcatpure = ""-%}
+
     {%-for g in goals-%}
       {%-assign gpercent = totalSold | times: 100 | divided_by: g -%}
+      
+      {%-assign gpercentcatpure = gpercentcatpure | append: gpercent | append: ", " -%}
+      
       <div class="g-wrap{% if gpercent < 100 and gactive == gcount %} active {% elsif gactive == gcount and gpercent >= 100 %} complete{% elsif gactive < gcount %} pending{%endif%}">
-        <div class="g-meter">
-          <span style="width: {{ gpercent }}%;">{% if gactive == gcount and gpercent >= 100 %}<span class="checkmark">Complete!</span>{%endif%}</span>
-        </div>
+        <progress max="100" value="0" class="goal-{{ gcount }}">
+          <div class="g-meter">
+            <span style="width: {{ gpercent }}%;">{% if gactive == gcount and gpercent >= 100 %}<span class="checkmark">Complete!</span>{%endif%}</span>
+          </div>
+        </progress>
 
         <div class="g-label">{{totalSold | times: 100 | divided_by: g }}% {{ goalText[gcount]}}</div>
         {%- if gpercent >= 100 -%}{%-assign gactive = gcount | plus:1 -%}{%endif%}
@@ -142,8 +149,18 @@
     {%-endfor-%}
 
     {{product.metafields.global.campaigninfo}}
-
   </section>
+
+  <script> 
+    document.addEventListener("DOMContentLoaded", function(e) {
+      {%-assign max       = gcount | minus: 1 -%}
+      {%-assign gpercents = gpercentcatpure | split:',' -%}
+      {% for counter in (0..max) %}
+        document.querySelector("progress.goal-{{counter}}").value = {{ gpercents[counter] }};
+      {%endfor%}
+      });
+      
+  </script>
   
 
 

@@ -8,7 +8,7 @@ By [Craig Mod](https://craigmod.com). Made available under Mozilla Public Licens
 
 Crowdfunding campaigns are great ways to "activate" communities. Shared goals and a sense of "unlocking" a creative project help incentivize consolidated and immediate action. 
 
-Kickstarter is a great way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system, and reasonable CC processing fees, an indie publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using Craigstarter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
+Kickstarter is an excellent way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be unnecessarily cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system and reasonable CC processing fees, an independent publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using Craigstarter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
 
 ### Advantages and disadvantages 
 The goal of Craigstarter is to provide a straightforward way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
@@ -27,6 +27,12 @@ Kickstarter is better than Craigstarter in many ways, not the least of which are
 - Simpler to setup (i.e., no setup; Kickstarter hosts and runs your campaign)
 - Kickstarter payments only happen when main campaign goal is reached; Craigstarter charges immediately
 - Kickstarter has tools for following up / providing campaign updates / community communication 
+
+The lack of goal-triggered payments is probably the biggest "downside" to Craigstarter. Technically, I believe you can have charges be authorized on checkout, but only pushed through on "shipping" — allowing one to approximate the Kickstarter experience on Shopify. However, these charge authorizations are short lived, and this would only for (as far as I can tell) for quick campaigns. 
+
+That said, many Kickstarter campaigns are run as promotional tools more than strict fundraising tools, with the intent by creators to ship no matter what. In theory, one could set a minimum goal on Shopify which, if not met, would trigger a manual refunding of all backers (minus the ~2.8% processing fees). Robin Sloan rigged up something similar with his [2020 Sloanstarter campaign](https://www.robinsloan.com/sloanstarter/). 
+
+In the end, if you have an audience, and you have reasonable baseline goals, then the issue of "raising enough funds" for a project launch is often not an issue. 
 
 ----
 
