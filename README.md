@@ -23,6 +23,8 @@ Kickstarter is better than Craigstarter in the following ways:
 
 ----
 
+## Goals and Tiers Screenshots
+
 ![goals and tiers](craigstarter_goals_tiers.jpg)
 
 ## Installing
