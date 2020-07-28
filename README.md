@@ -2,6 +2,8 @@
 
 An indie kickstarter-like experience for Shopify
 
+![goals and tiers](craigstarter_goals_tiers.jpg)
+
 ## Installing
 
 Note: The included `product-template.liquid` file is based off the "Simple" theme. You'll have to modify it if you're using something else. 
