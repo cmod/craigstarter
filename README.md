@@ -17,7 +17,7 @@ Craigstarter offers the following benefits over Kickstarter:
 
 - free to use / modify
 - only pay Shopify's payments fee (~2.8%) instead of Kickstarter's fee (~10%)
-- multiple goals — you don't have to resort of "stretch goals" without progress indicators 
+- multiple goals — you don't have to resort to "stretch goals" without progress indicators 
 - total customization of design
 - completed campaigns live on your website, not Kickstarter's
 
