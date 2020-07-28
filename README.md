@@ -4,6 +4,8 @@ An indie Kickstarter-like experience for Shopify with multiple goals and variant
 
 By [Craig Mod](https://craigmod.com). Made available under Mozilla Public License 2.0. 
 
+![goals and tiers](craigstarter_goals_tiers.jpg)
+
 ### Why?
 
 Crowdfunding campaigns are great ways to "activate" communities. Shared goals and a sense of "unlocking" a creative project help incentivize consolidated and immediate action. 
@@ -36,9 +38,6 @@ In the end, if you have an audience, and you have reasonable baseline goals, the
 
 ----
 
-## Goals and Tiers Screenshots
-
-![goals and tiers](craigstarter_goals_tiers.jpg)
 
 ## Installing
 
