@@ -8,17 +8,14 @@ By [Craig Mod](https://craigmod.com). Made available under Mozilla Public Licens
 
 ## Installing
 
-Note: The included `product-template.liquid` file is based off the "Simple" theme. You'll have to modify it if you're using something else. 
+Note: The included `product-template.liquid` file is based off the "Simple" Shopify theme. You'll have to modify the template if you're using a different theme. 
 
-I've tried to make this as simple as possible to install / setup without it being a plugin. 
+I've tried to make this as simple as possible to install / setup without it being a plugin (hence affording you the most flexibility / necessary modifications). 
 
-Place `camapign.liquid` into your template `snippets` folder. 
-
-Place `campaign.scss` into your template `assets` folder.
-
-Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
-
-Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
+1. Place `camapign.liquid` into your template `snippets` folder. 
+2. Place `campaign.scss` into your template `assets` folder.
+3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
+4. Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
 
 The campaign sidebar is rendered using the following line: 
 `{% render 'campaign', product: product %}`
