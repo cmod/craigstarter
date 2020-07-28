@@ -1,6 +1,6 @@
-# craigstarter
+# Craigstarter
 
-An indie kickstarter-like experience for Shopify
+An indie kickstarter-like experience for Shopify with multiple goals and variants as tiers. 
 
 ![goals and tiers](craigstarter_goals_tiers.jpg)
 
