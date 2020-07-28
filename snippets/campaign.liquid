@@ -1,0 +1,149 @@
+{%-comment-%}========================================================={%-endcomment-%}
+{%-comment-%}
+SET fundingcampaign TO TRUE in metafields for a product to turn on the campaign
+Then set the product ID and other variables below
+{%-endcomment-%}
+{%-comment-%}========================================================={%-endcomment-%}
+
+{%-assign active_crowd = product.metafields.global.fundingcampaign-%}
+{%-assign debug = false-%}
+
+
+{%-comment-%}========================================================={%-endcomment-%}
+{%-comment-%}Only do this if a campaign is running for this product   {%-endcomment-%}
+{%-comment-%}========================================================={%-endcomment-%}
+{%- unless active_crowd == false -%}
+
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-comment-%} SETUP general                                           {%-endcomment-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-assign currentDate   = "now" | date: "%s"-%}
+  {%-assign endDate       = product.metafields.global.campaignenddate-%}
+  {%-assign daysUntilDone = endDate | date: "%s" | minus: currentDate | divided_by: 3600 | divided_by: 24 | round  -%}
+  {%-assign hoursUntilDone = endDate | date: "%s" | minus: currentDate | divided_by: 3600 -%}
+
+  {%-if debug-%}
+    days until done: {{ daysUntilDone }}<br />
+    hours: {{ hoursUntilDone }}<br />
+  {%-endif%}
+  {%-comment-%}========================================================={%-endcomment-%}
+
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-comment-%} SETUP for tiers as variants                             {%-endcomment-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-assign totalAvail = product.metafields.global.totalavailableproducts-%}
+
+  {%-assign goal_mode   = "not_currency"-%}
+  {%-assign goals       = product.metafields.global.goalamounts | split:','-%}
+  {%-assign goalText    = product.metafields.global.goaltext | split:','-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+
+  {%-assign count         = 0-%}
+  {%-assign totalSold     = 0-%}
+  {%-assign totalRevenue  = 0-%}
+
+  {%-if debug-%}
+  num of variants: {{ product.variants.size }}<br />
+  -------<br />
+  {%-endif-%}
+
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-comment-%} TOTAL SOLD, add up each variant                         {%-endcomment-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%for variant in product.variants-%}
+    {%-capture variantSales-%}{{ variant.metafields.global.totalquantity | minus:variant.inventory_quantity }} {%-endcapture%}
+    {%-assign totalSold = totalSold | plus:variantSales-%}
+    {%-assign variantBucks = variantSales | times:variant.price-%}
+    {%-assign totalRevenue = totalRevenue | plus:variantBucks-%}
+
+    {%if debug-%}
+      {%-comment-%}{{ variant | json }}{%-endcomment-%}
+      Loop count: {{ count }}<br />
+      Variant quantity remaining: {{ variant.inventory_quantity }}<br />
+      Variant total quant: {{ variant.metafields.global.totalquantity }}<br />
+      sold: {{ variantSales }}<br />
+      variantBucks: {{ variantBucks }}<br />
+      ------ <br />
+    {%-endif%}
+
+    {%-assign count = count | plus: 1-%}
+  {%-endfor%}
+  {%-if debug-%}
+    Total Sold: {{ totalSold }}<br />
+    Total revenue: {{totalRevenue | money }}
+  {%-endif-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+
+
+
+  {%-comment-%}========================================================={%-endcomment-%}
+  {%-comment-%} GENERATE HTML                                           {%-endcomment-%}
+  {%-comment-%}========================================================={%-endcomment-%}
+  <section class="craigstarter">
+    <p><span class="totalsold"><strong>{{totalSold}}</span> backers</strong> ({{totalRevenue | money}})</p>
+    
+    <p>
+      <strong>
+        {%-if hoursUntilDone < 24-%}
+          {%-if hoursUntilDone == 1-%}
+            {{ hoursUntilDone }} hour
+          {%-else-%}
+            {{ hoursUntilDone }} hours
+          {%-endif-%}
+        {%-else-%}
+          {%-if daysUntilDone == 1-%}
+            {{ daysUntilDone }} day
+          {%-else-%}
+            {{ daysUntilDone }} days
+          {%-endif-%}
+        {%endif%}
+      </strong> until pre-order campaign ends
+    </p>
+
+
+    <p>Currently, we are:</p>
+
+    {%-assign gcount = 0-%}
+    {%-assign gactive = 0-%}
+    {%-for g in goals-%}
+      {%-assign gpercent = totalSold | times: 100 | divided_by: g -%}
+      <div class="g-wrap{% if gpercent < 100 and gactive == gcount %} active {% elsif gactive == gcount and gpercent >= 100 %} complete{% elsif gactive < gcount %} pending{%endif%}">
+        <div class="g-meter">
+          <span style="width: {{ gpercent }}%;">{% if gactive == gcount and gpercent >= 100 %}<span class="checkmark">Complete!</span>{%endif%}</span>
+        </div>
+
+        <div class="g-label">{{totalSold | times: 100 | divided_by: g }}% {{ goalText[gcount]}}</div>
+        {%- if gpercent >= 100 -%}{%-assign gactive = gcount | plus:1 -%}{%endif%}
+        {%-assign gcount = gcount | plus:1-%}
+      </div>
+    {%-endfor-%}
+
+    {{product.metafields.global.campaigninfo}}
+
+  </section>
+  
+
+  
+  <h2 class="tiertop">Select your Tier</h2>
+    {%-assign vc = 0%}
+    {% for variant in product.variants %}
+      <div class="tier variant-{{variant.id}}{%if variant.inventory_quantity == 0%} soldout{%endif%}" {%if variant.inventory_quantity > 0%}onclick="updateTier({{variant.id}})"{%endif%}>
+        <h3>{{ variant.title }}{%if variant.inventory_quantity == 0%} (Sold Out){%endif%}</h3>
+        <h4>{{ variant.price | money }} {%-if variant.compare_at_price-%}<s class="compared">{{ variant.compare_at_price | money }}</s>{%-endif-%}</h4>
+        <p>{{ variant.metafields.global.variantdescription }}</p>
+        <p class="remaining">{{ variant.inventory_quantity}} of {{ variant.metafields.global.totalquantity }} remaining</p>
+        {%-assign vc = vc | plus: 1-%}
+        <div class="ribbon">Selected</div>
+      </div>
+    {% endfor %}
+
+    <script>
+      function updateTier(variantId) {
+        console.log(variantId);
+        $('#ProductSelect-product-template option').removeAttr('selected').filter('[value='+variantId+']').prop('selected', true);
+        $('.tier').removeClass('active');
+        $('.variant-'+variantId).addClass('active');
+      }
+    </script>
+
+{%-endunless-%}
