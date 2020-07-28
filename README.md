@@ -91,3 +91,11 @@ Save these URLs as bookmarks to edit / modify as needed.
 ## Screenshots
 ![screenshot1](screenshot01.jpg)
 ![screenshot2](screenshot02.jpg)
+
+
+----
+
+## Todo
+
+- Setup monetary goals (right now it's just unit sales to keep it simple)
+- Clean up javascript to be more elegant
