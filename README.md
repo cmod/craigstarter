@@ -1,6 +1,6 @@
 # Craigstarter
 
-An indie kickstarter-like experience for Shopify with multiple goals and variants as tiers. 
+An indie Kickstarter-like experience for Shopify with multiple goals and variants as campaign tiers. 
 
 By [Craig Mod](https://craigmod.com). Made available under Mozilla Public License 2.0. 
 
@@ -18,6 +18,8 @@ Kickstarter is better than Craigstarter in the following ways:
 - The Kickstarter ecosystem offers network / community effects around PR and amplification of campaign 
 - Simpler to setup (i.e., no setup; Kickstarter hosts and runs your campaign)
 - Kickstarter payments only happen when main campaign goal is reached; Craigstarter charges immediately
+- Kickstarter has tools for following up / providing campaign updates / community communication 
+
 
 ----
 
@@ -78,3 +80,9 @@ Shopify sneakily provides a way to easily edit metafields without a plugin using
 
 `https://YOURSHOP.myshopify.com/admin/bulk?resource_name=ProductVariant&edit=metafields.global.variantdescription,metafields.global.totalquantity
 `
+
+----
+
+## Screenshots
+![screenshot1](screenshot01.jpg)
+![screenshot2](screenshot02.jpg)
