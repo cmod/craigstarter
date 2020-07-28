@@ -4,7 +4,14 @@ An indie Kickstarter-like experience for Shopify with multiple goals and variant
 
 By [Craig Mod](https://craigmod.com). Made available under Mozilla Public License 2.0. 
 
-The goal of this is to provide a fairly easy way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
+### Why?
+
+Crowdfunding campaigns are great ways to "activate" communities. Shared goals and a sense of "unlocking" a creative project help incentivize consolidated and immediate action. 
+
+Kickstarter is a great way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system, and reasonable CC processing fees, an indie publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using Craigstarter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
+
+### Advantages and disadvantages 
+The goal of Craigstarter is to provide a straightforward way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
 
 Craigstarter offers the following benefits over Kickstarter:
 
@@ -12,14 +19,14 @@ Craigstarter offers the following benefits over Kickstarter:
 - only pay Shopify's payments fee (~2.8%) instead of Kickstarter's fee (~10%)
 - multiple goals — you don't have to resort of "stretch goals" without progress indicators 
 - total customization of design
+- completed campaigns live on your website, not Kickstarter's
 
-Kickstarter is better than Craigstarter in the following ways:
+Kickstarter is better than Craigstarter in many ways, not the least of which are:
 
 - The Kickstarter ecosystem offers network / community effects around PR and amplification of campaign 
 - Simpler to setup (i.e., no setup; Kickstarter hosts and runs your campaign)
 - Kickstarter payments only happen when main campaign goal is reached; Craigstarter charges immediately
 - Kickstarter has tools for following up / providing campaign updates / community communication 
-
 
 ----
 
