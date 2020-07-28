@@ -1,18 +1,42 @@
 {%-comment-%}========================================================={%-endcomment-%}
 {%-comment-%}
-SET fundingcampaign TO TRUE in metafields for a product to turn on the campaign
-Then set the product ID and other variables below
+ All variables are set using product / variant metafields 
+
+ FOR PRODUCTS:
+ fundingcampaign: TRUE = running campaign 
+ campaignenddate: when the campaign ends in format of : 
+   YEAR-MO-DA HR:MN, i.e., 2020-08-15 22:30
+ totalavailableproducts: how many total products you're selling (all variants inclusive)
+ goalamounts: defines # of goals and sales amount per goal in comma-separated format: 
+   NUM, NUM, NUM, i.e., 100, 250, 500
+ goaltext: the text appearing with each goal, for each goal amount in comma-separated format: 
+   TEXT, TEXT, TEXT, i.d., to print, to signed, to postcards
+ campaigninfo: text blob appearing below goals, can contain html, et cetera
+
+ FOR VARIANTS: 
+ variantdescription: The extended description appearing in the selection box
+
+ - - - - - - - -
+
+ Metafields can be easily edited without a plugin using the following url structure: 
+ 
+ For products: 
+ https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.campaigninfo
+
+ For variants: 
+ https://YOURSHOP.myshopify.com/admin/bulk?resource_name=ProductVariant&edit=metafields.global.variantdescription
+
 {%-endcomment-%}
 {%-comment-%}========================================================={%-endcomment-%}
 
-{%-assign active_crowd = product.metafields.global.fundingcampaign-%}
+{%-assign crowdfunding = product.metafields.global.fundingcampaign-%}
 {%-assign debug = false-%}
 
 
 {%-comment-%}========================================================={%-endcomment-%}
 {%-comment-%}Only do this if a campaign is running for this product   {%-endcomment-%}
 {%-comment-%}========================================================={%-endcomment-%}
-{%- unless active_crowd == false -%}
+{%- unless crowdfunding == false -%}
 
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} SETUP general                                           {%-endcomment-%}
