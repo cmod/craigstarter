@@ -2,6 +2,8 @@
 
 An indie kickstarter-like experience for Shopify with multiple goals and variants as tiers. 
 
+By [Craig Mod](https://craigmod.com). Made available under Mozilla Public License 2.0. 
+
 ![goals and tiers](craigstarter_goals_tiers.jpg)
 
 ## Installing
