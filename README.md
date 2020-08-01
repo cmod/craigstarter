@@ -87,6 +87,9 @@ All variables used by the SP-starter snippet to run a campaign are set using a c
 
 ----
 
+## Metafield editing
+![metafields](metafields.jpg)
+
 Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own Metafields editor with the appropriate fields ready to be filled in. 
 
 Save these URLs as bookmarks to edit / modify as needed. 
