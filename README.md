@@ -4,7 +4,7 @@ A free to use / edit / extend crowdfunding tool for Shopify with multiple goals 
 
 Made by [Craig Mod](https://craigmod.com). 
 
-Supported by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
+Supported by <span style="font-size: .8em">[SPECIAL PROJECTS](https://craigmod.com/membership/)</span>.
 
 Released under Mozilla Public License 2.0. 
 
