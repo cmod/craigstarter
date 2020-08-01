@@ -1,8 +1,10 @@
-# Craigstarter
+# SP-starter
 
-An indie Kickstarter-like experience for Shopify with multiple goals and variants as campaign tiers. 
+A free to use / edit / extend crowdfunding tool for Shopify with multiple goals and variants as campaign tiers. 
 
-By [Craig Mod](https://craigmod.com). Made available under Mozilla Public License 2.0. 
+By [Craig Mod](https://craigmod.com). 
+Made possible by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
+Released under Mozilla Public License 2.0. 
 
 ![goals and tiers](craigstarter_goals_tiers.jpg)
 
@@ -10,12 +12,12 @@ By [Craig Mod](https://craigmod.com). Made available under Mozilla Public Licens
 
 Crowdfunding campaigns are great ways to "activate" communities. Shared goals and a sense of "unlocking" a creative project help incentivize consolidated and immediate action. 
 
-Kickstarter is an excellent way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be unnecessarily cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system and reasonable CC processing fees, an independent publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using Craigstarter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
+Kickstarter is an excellent way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be unnecessarily cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system and reasonable CC processing fees, an independent publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using SP-starter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
 
 ### Advantages and disadvantages 
-The goal of Craigstarter is to provide a straightforward way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
+The goal of SP-starter is to provide a straightforward way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
 
-Craigstarter offers the following benefits over Kickstarter:
+SP-starter offers the following benefits over Kickstarter:
 
 - free to use / modify
 - only pay Shopify's payments fee (~2.8%) instead of Kickstarter's fee (~10%)
@@ -23,14 +25,14 @@ Craigstarter offers the following benefits over Kickstarter:
 - total customization of design
 - completed campaigns live on your website, not Kickstarter's
 
-Kickstarter is better than Craigstarter in many ways, not the least of which are:
+Kickstarter is better than SP-starter in many ways, not the least of which are:
 
 - The Kickstarter ecosystem offers network / community effects around PR and amplification of campaign 
 - Simpler to setup (i.e., no setup; Kickstarter hosts and runs your campaign)
-- Kickstarter payments only happen when main campaign goal is reached; Craigstarter charges immediately
+- Kickstarter payments only happen when main campaign goal is reached; SP-starter charges immediately
 - Kickstarter has tools for following up / providing campaign updates / community communication 
 
-The lack of goal-triggered payments is probably the biggest "downside" to Craigstarter. Technically, I believe you can have charges be authorized on checkout, but only pushed through on "shipping" — allowing one to approximate the Kickstarter experience on Shopify. However, these charge authorizations are short lived, and this would only for (as far as I can tell) for quick campaigns. 
+The lack of goal-triggered payments is probably the biggest "downside" to SP-starter. Technically, I believe you can have charges be authorized on checkout, but only pushed through on "shipping" — allowing one to approximate the Kickstarter experience on Shopify. However, these charge authorizations are short lived, and this would only for (as far as I can tell) for quick campaigns. 
 
 That said, many Kickstarter campaigns are run as promotional tools more than strict fundraising tools, with the intent by creators to ship no matter what. In theory, one could set a minimum goal on Shopify which, if not met, would trigger a manual refunding of all backers (minus the ~2.8% processing fees). Robin Sloan rigged up something similar with his [2020 Sloanstarter campaign](https://www.robinsloan.com/sloanstarter/). 
 
@@ -57,7 +59,7 @@ The campaign sidebar is rendered using the following line in product-template:
 
 
 ### Variables / Metafields
-All variables used by the Craigstarter snippet to run a campaign are set using a combination of product and variant-specific metafields. 
+All variables used by the SP-starter snippet to run a campaign are set using a combination of product and variant-specific metafields. 
 
 #### Product Metafields
 
@@ -84,6 +86,9 @@ All variables used by the Craigstarter snippet to run a campaign are set using a
   sales calculated based on totalquanity - remaining inventory 
 
 ----
+
+## Metafield editing
+![metafields](metafields.jpg)
 
 Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own Metafields editor with the appropriate fields ready to be filled in. 
 
