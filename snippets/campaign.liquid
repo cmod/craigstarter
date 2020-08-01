@@ -3,7 +3,7 @@
  All variables are set using product / variant metafields 
 
  FOR PRODUCTS:
- fundingcampaign: TRUE = running campaign 
+ fundingcampaign: true = running campaign 
  campaignenddate: when the campaign ends in format of : 
    YEAR-MO-DA HR:MN, i.e., 2020-08-15 22:30
  totalavailableproducts: how many total products you're selling (all variants inclusive)
@@ -29,14 +29,13 @@
 {%-endcomment-%}
 {%-comment-%}========================================================={%-endcomment-%}
 
-{%-assign crowdfunding = product.metafields.global.fundingcampaign-%}
-{%-assign debug = false-%} {%comment%} Set to TRUE to output variables to template {%endcomment%}
+{%-assign debug = false-%} {%comment%} Set to true to output variables to template {%endcomment%}
 
 
 {%-comment-%}========================================================={%-endcomment-%}
 {%-comment-%}Only do this if a campaign is running for this product   {%-endcomment-%}
 {%-comment-%}========================================================={%-endcomment-%}
-{%- unless crowdfunding == false -%}
+{%- if product.metafields.global.fundingcampaign == "true" -%}
 
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} SETUP general                                           {%-endcomment-%}
@@ -149,6 +148,8 @@
     {%-endfor-%}
 
     {{product.metafields.global.campaigninfo}}
+
+    <span style="font-size: .8em;">Powered by <a href="https://github.com/cmod/sp-starter"">SP-Starter</a>.</span>
   </section>
 
   <script> 
@@ -193,4 +194,4 @@
       }
     </script>
 
-{%-endunless-%}
+{%-endif-%}
