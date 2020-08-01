@@ -6,7 +6,7 @@ By [Craig Mod](https://craigmod.com).
 Made possible by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
 Released under Mozilla Public License 2.0. 
 
-![goals and tiers](craigstarter_goals_tiers.jpg)
+![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
 
 ### Why?
 
@@ -88,7 +88,7 @@ All variables used by the SP-starter snippet to run a campaign are set using a c
 ----
 
 ## Metafield editing
-![metafields](metafields.jpg)
+![metafields](screenshots/metafields.jpg)
 
 Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own Metafields editor with the appropriate fields ready to be filled in. 
 
@@ -106,8 +106,8 @@ Save these URLs as bookmarks to edit / modify as needed.
 ----
 
 ## Screenshots
-![screenshot1](screenshot01.jpg)
-![screenshot2](screenshot02.jpg)
+![screenshot1](screenshots/screenshot01.jpg)
+![screenshot2](screenshots/screenshot02.jpg)
 
 
 ----
