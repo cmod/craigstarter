@@ -53,9 +53,13 @@ I've tried to make this as simple as possible to install / setup without it bein
 2. Place `campaign.scss` into your template `assets` folder.
 3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
 4. Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
+5. Place `assets/product-template-campaign.liquid` and `assets/product-template-general.liquid` into your `assets` folder
 
 The campaign sidebar is rendered using the following line in product-template: 
 `{% render 'campaign', product: product %}`
+
+`product-template-general.liquid` will become the template rendered for non-crowdfunding campaigns. And `product-template-campaign.liquid` will be rendered when setting the `fundingcampaign` metafield to "true" (explained below). 
+
 
 ----
 
