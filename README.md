@@ -1,6 +1,6 @@
 # SP-starter
 
-An indie Kickstarter-like experience for Shopify with multiple goals and variants as campaign tiers. 
+A free to use / edit / extend crowdfunding tool for Shopify with multiple goals and variants as campaign tiers. 
 
 By [Craig Mod](https://craigmod.com). 
 Made possible by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
