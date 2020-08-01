@@ -2,8 +2,10 @@
 
 A free to use / edit / extend crowdfunding tool for Shopify with multiple goals and variants as campaign tiers. 
 
-By [Craig Mod](https://craigmod.com). 
-Made possible by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
+Made by [Craig Mod](https://craigmod.com). 
+
+Supported by [SPECIAL PROJECTS](https://craigmod.com/membership/). 
+
 Released under Mozilla Public License 2.0. 
 
 ![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
