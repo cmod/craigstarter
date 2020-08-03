@@ -50,7 +50,7 @@ I've tried to make this as simple as possible to install / setup without it bein
 1. Place `camapign.liquid` into your template `snippets` folder. 
 2. Place `campaign.scss` into your template `assets` folder.
 3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
-4. Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
+4. Backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` 
 5. Place `assets/product-template-campaign.liquid` and `assets/product-template-general.liquid` into your `assets` folder
 
 The campaign sidebar is rendered using the following line in product-template: 
