@@ -80,6 +80,8 @@ All variables used by the Craigstarter snippet to run a campaign are set using a
 `goaltext:` the text appearing with each goal, for each goal amount in comma-separated format: 
  TEXT, TEXT, TEXT, i.d., to print, to signed, to postcards
 
+`goaltextcomplete:` the text appearing once you pass 100% for a given goal; comma-separated like the other goal fields
+
 `campaigninfo:` text blob appearing below goals, can contain html, et cetera
 
 #### Variants Metafields
@@ -100,7 +102,7 @@ Save these URLs as bookmarks to edit / modify as needed.
 
 #### For products: 
 
-`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.campaigninfo`
+`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.subtitle,metafields.global.author,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.goaltextcomplete,metafields.global.campaigninfo
 
 #### For variants: 
 
