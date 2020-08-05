@@ -10,13 +10,13 @@ Released under Mozilla Public License 2.0.
 
 ![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
 
-### Why?
+## Why?
 
 Crowdfunding campaigns are great ways to "activate" communities. Shared goals and a sense of "unlocking" a creative project help incentivize consolidated and immediate action. 
 
 Kickstarter is an excellent way to run a crowdfunding campaign. But if you already have a community built up, and have communication channels in place (via a newsletter, for example), and already run an online shop, then Kickstarter can be unnecessarily cumbersome. Kickstarter's 10% fee is also quite hefty. By leaning on Shopify's flexible Liquid templating system and reasonable CC processing fees, an independent publisher running a campaign can save some ~$7,000 for every $100,000 of sales by using Craigstarter instead of Kickstarter. That's materially meaningful, especially in the world of books. 
 
-### Advantages and disadvantages 
+## Advantages and disadvantages 
 The goal of Craigstarter is to provide a straightforward way for folks to run crowdfunding campaigns on their Shopify shop without having to pay a monthly fee for metafield editing plugins or other crowdfunding plugins. 
 
 Craigstarter offers the following benefits over Kickstarter:
@@ -40,8 +40,6 @@ That said, many Kickstarter campaigns are run as promotional tools more than str
 
 In the end, if you have an audience, and you have reasonable baseline goals, then the issue of "raising enough funds" for a project launch is often not an issue. 
 
-----
-
 
 ## Installing
 
@@ -52,7 +50,7 @@ I've tried to make this as simple as possible to install / setup without it bein
 1. Place `camapign.liquid` into your template `snippets` folder. 
 2. Place `campaign.scss` into your template `assets` folder.
 3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
-4. Either backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` or copy over the relevant `campaign`-related sections to your own template. 
+4. Backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` 
 5. Place `assets/product-template-campaign.liquid` and `assets/product-template-general.liquid` into your `assets` folder
 
 The campaign sidebar is rendered using the following line in product-template: 
@@ -64,7 +62,7 @@ The campaign sidebar is rendered using the following line in product-template:
 ----
 
 
-### Variables / Metafields
+## Variables / Metafields
 All variables used by the Craigstarter snippet to run a campaign are set using a combination of product and variant-specific metafields. 
 
 #### Product Metafields
@@ -81,6 +79,8 @@ All variables used by the Craigstarter snippet to run a campaign are set using a
 
 `goaltext:` the text appearing with each goal, for each goal amount in comma-separated format: 
  TEXT, TEXT, TEXT, i.d., to print, to signed, to postcards
+
+`goaltextcomplete:` the text appearing once you pass 100% for a given goal; comma-separated like the other goal fields
 
 `campaigninfo:` text blob appearing below goals, can contain html, et cetera
 
@@ -102,7 +102,7 @@ Save these URLs as bookmarks to edit / modify as needed.
 
 #### For products: 
 
-`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.campaigninfo`
+`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.subtitle,metafields.global.author,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.goaltextcomplete,metafields.global.campaigninfo
 
 #### For variants: 
 
