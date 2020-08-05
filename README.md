@@ -34,7 +34,7 @@ Kickstarter is better than Craigstarter in many ways, not the least of which are
 - Kickstarter payments only happen when main campaign goal is reached; Craigstarter charges immediately
 - Kickstarter has tools for following up / providing campaign updates / community communication 
 
-The lack of goal-triggered payments is probably the biggest "downside" to Craigstarter. Technically, I believe you can have charges be authorized on checkout, but only pushed through on "shipping" — allowing one to approximate the Kickstarter experience on Shopify. However, these charge authorizations are short lived, and this would only for (as far as I can tell) for quick campaigns. 
+The lack of goal-triggered payments is probably the biggest "downside" to Craigstarter. Technically, I believe you can have charges be authorized on checkout, but only pushed through on "shipping" — allowing one to approximate the Kickstarter experience on Shopify. However, these charge authorizations are short lived, and this would only work (as far as I can tell) for quick campaigns. 
 
 That said, many Kickstarter campaigns are run as promotional tools more than strict fundraising tools, with the intent by creators to ship no matter what. In theory, one could set a minimum goal on Shopify which, if not met, would trigger a manual refunding of all backers (minus the ~2.8% processing fees). Robin Sloan rigged up something similar with his [2020 Sloanstarter campaign](https://www.robinsloan.com/sloanstarter/). 
 
