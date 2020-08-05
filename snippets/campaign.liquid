@@ -11,6 +11,7 @@
    NUM, NUM, NUM, i.e., 100, 250, 500
  goaltext: the text appearing with each goal, for each goal amount in comma-separated format: 
    TEXT, TEXT, TEXT, i.d., to print, to signed, to postcards
+ goalTextComplete: the text replacing the % when a goal passes 100%
  campaigninfo: text blob appearing below goals, can contain html, et cetera
 
  FOR VARIANTS: 
@@ -58,6 +59,7 @@
 
   {%-assign goals       = product.metafields.global.goalamounts | split:','-%}
   {%-assign goalText    = product.metafields.global.goaltext | split:','-%}
+  {%-assign goalTextComplete    = product.metafields.global.goaltextcomplete | split:','-%}
   {%-comment-%}========================================================={%-endcomment-%}
 
   {%-assign count         = 0-%}
@@ -141,7 +143,7 @@
           </div>
         </progress>
 
-        <div class="g-label">{{totalSold | times: 100 | divided_by: g }}% {{ goalText[gcount]}}</div>
+        <div class="g-label">{%- if gpercent >= 100 -%}{{ goalTextComplete[gcount]}}{%- else -%}{{totalSold | times: 100 | divided_by: g }}% {{ goalText[gcount]}}{%- endif -%}</div>
         {%- if gpercent >= 100 -%}{%-assign gactive = gcount | plus:1 -%}{%endif%}
         {%-assign gcount = gcount | plus:1-%}
       </div>
