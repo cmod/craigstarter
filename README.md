@@ -8,6 +8,8 @@ Supported by [SPECIAL PROJECTS](https://craigmod.com/membership/).
 
 Released under Mozilla Public License 2.0. 
 
+Video tutorial for setting this up: [https://www.youtube.com/watch?v=DXP9iKARaYY](https://www.youtube.com/watch?v=DXP9iKARaYY)
+
 ![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
 
 ## Why?
