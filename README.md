@@ -54,7 +54,7 @@ I've tried to make this as simple as possible to install / setup without it bein
 5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder
 6. Add the following CSS to `assets/theme.scss.liquid`: 
 
-`
+```
 @include media-query($medium-down) {
   .medium-only { display: none; }
 }
@@ -62,7 +62,7 @@ I've tried to make this as simple as possible to install / setup without it bein
 @include media-query($medium-up) {
   .small-only { display: none; }
 }
-`
+```
 
 That CSS will hide and show the proper `div` for product description for desktop / mobile. 
 
