@@ -49,9 +49,9 @@ I've tried to make this as simple as possible to install / setup without it bein
 
 1. Place `camapign.liquid` into your template `snippets` folder. 
 2. Place `campaign.scss` into your template `assets` folder.
-3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `theme.liquid`.
-4. Backup your `product-template.liquid` file and replace with the included `sections/product-template.liquid` 
-5. Place `assets/product-template-campaign.liquid` and `assets/product-template-general.liquid` into your `assets` folder
+3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `layout/theme.liquid`.
+4. Backup your `sections/product-template.liquid` file and replace with the included `sections/product-template.liquid` 
+5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder
 
 The campaign sidebar is rendered using the following line in product-template: 
 `{% render 'campaign', product: product %}`
@@ -102,7 +102,7 @@ Save these URLs as bookmarks to edit / modify as needed.
 
 #### For products: 
 
-`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.subtitle,metafields.global.author,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.goaltextcomplete,metafields.global.campaigninfo
+`https://YOURSHOP.myshopify.com/admin/bulk?resource_name=Product&edit=metafields.global.fundingcampaign,metafields.global.subtitle,metafields.global.author,metafields.global.campaignenddate,metafields.global.totalavailableproducts,metafields.global.goalamounts,metafields.global.goaltext,metafields.global.goaltextcomplete,metafields.global.campaigninfo`
 
 #### For variants: 
 
