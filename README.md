@@ -52,8 +52,20 @@ I've tried to make this as simple as possible to install / setup without it bein
 3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `layout/theme.liquid`.
 4. Backup your `sections/product-template.liquid` file and replace with the included `sections/product-template.liquid` 
 5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder
+6. Add the following CSS to `assets/theme.scss.liquid`: 
 
-The campaign sidebar is rendered using the following line in product-template: 
+`@include media-query($medium-down) {
+  .medium-only { display: none; }
+}
+
+@include media-query($medium-up) {
+  .small-only { display: none; }
+}`
+
+That CSS will hide and show the proper `div` for product description for desktop / mobile. 
+
+##### Notes: 
+If you want to add the campaign bar to your own template, the campaign sidebar is rendered using the following line in product-template: 
 `{% render 'campaign', product: product %}`
 
 `product-template-general.liquid` will become the template rendered for non-crowdfunding campaigns. And `product-template-campaign.liquid` will be rendered when setting the `fundingcampaign` metafield to "true" (explained below). 
