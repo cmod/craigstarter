@@ -122,3 +122,4 @@ Save these URLs as bookmarks to edit / modify as needed.
 
 - Setup monetary goals (right now it's just unit sales to keep it simple)
 - Clean up javascript to be more elegant
+- Have "add to cart" button appear below selected tier in elegant way
