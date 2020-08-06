@@ -10,6 +10,8 @@ Released under Mozilla Public License 2.0.
 
 Video tutorial for setting this up: [https://www.youtube.com/watch?v=DXP9iKARaYY](https://www.youtube.com/watch?v=DXP9iKARaYY)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DXP9iKARaYY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
 
 ## Why?
