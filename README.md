@@ -12,7 +12,11 @@ Video tutorial for setting this up: [https://www.youtube.com/watch?v=DXP9iKARaYY
 
 ![youtube tutorial](screenshots/youtube.jpg)
 
+----
+
 ![goals and tiers](screenshots/craigstarter_goals_tiers.jpg)
+
+----
 
 ## Why?
 
