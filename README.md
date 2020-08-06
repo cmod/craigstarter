@@ -10,7 +10,7 @@ Released under Mozilla Public License 2.0.
 
 Video tutorial for setting this up: [https://www.youtube.com/watch?v=DXP9iKARaYY](https://www.youtube.com/watch?v=DXP9iKARaYY)
 
-![youtube tutorial](screenshots/youtube.jpg)
+[![youtube tutorial](screenshots/youtube.jpg)](https://www.youtube.com/watch?v=DXP9iKARaYY)
 
 ----
 
