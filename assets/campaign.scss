@@ -8,7 +8,7 @@
 
 
 /*  ==========================================================
-    Tier design — to make those fancy tier buttons and "selected" states
+    Tier design — to make those fancy tier buttons and "selected" states
 */
     .tiertop { 
       border-top: 0px solid #ddd; 
@@ -226,3 +226,10 @@
         }
       }
     }
+
+
+	.hideme { display: none; }
+
+	.campaignform .selector-wrapper { display: none; }
+
+	
