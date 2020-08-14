@@ -106,23 +106,27 @@
   <section class="craigstarter">
     <p><span class="totalsold"><strong>{{totalSold}}</span> backers</strong> ({{totalRevenue | money}})</p>
     
-    <p>
-      <strong>
-        {%-if hoursUntilDone < 24-%}
-          {%-if hoursUntilDone == 1-%}
-            {{ hoursUntilDone }} hour
+    {%-if hoursUntilDone == 0-%}
+      <p>Pre-sale campaign is done!</p>
+    {%-else-%}
+      <p>
+        <strong>
+          {%-if hoursUntilDone < 24-%}
+            {%-if hoursUntilDone == 1-%}
+              {{ hoursUntilDone }} hour
+            {%-else-%}
+              {{ hoursUntilDone }} hours
+            {%-endif-%}
           {%-else-%}
-            {{ hoursUntilDone }} hours
-          {%-endif-%}
-        {%-else-%}
-          {%-if daysUntilDone == 1-%}
-            {{ daysUntilDone }} day
-          {%-else-%}
-            {{ daysUntilDone }} days
-          {%-endif-%}
-        {%endif%}
-      </strong> until pre-order campaign ends
-    </p>
+            {%-if daysUntilDone == 1-%}
+              {{ daysUntilDone }} day
+            {%-else-%}
+              {{ daysUntilDone }} days
+            {%-endif-%}
+          {%endif%}
+        </strong> until pre-order campaign ends
+      </p>
+    {%-endif-%}
 
 
     <p>Currently, we are:</p>
