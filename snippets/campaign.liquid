@@ -106,7 +106,7 @@
   <section class="craigstarter">
     <p><span class="totalsold"><strong>{{totalSold}}</span> backers</strong> ({{totalRevenue | money}})</p>
     
-    {%-if hoursUntilDone == 0-%}
+    {%-if hoursUntilDone <= 0-%}
       <p>Pre-sale campaign is done!</p>
     {%-else-%}
       <p>
