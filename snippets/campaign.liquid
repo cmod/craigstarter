@@ -177,12 +177,12 @@
   <h2 class="tiertop">Select your Tier</h2>
     {%-assign vc = 0%}
     {% for variant in product.variants %}
-      <div class="tier variant-{{variant.id}}{%if variant.inventory_quantity == 0%} soldout{%endif%}" {%if variant.inventory_quantity > 0%}onclick="updateTier({{variant.id}})"{%endif%}>
+      <div class="tier variant-{{variant.id}}{%if variant.inventory_quantity <= 0%} soldout{%endif%}" {%if variant.inventory_quantity > 0%}onclick="updateTier({{variant.id}})"{%endif%}>
         <h3>{{ variant.title }}{%if variant.inventory_quantity == 0%} (Sold Out){%endif%}</h3>
         <h4>{{ variant.price | money }} {%-if variant.compare_at_price-%}<s class="compared">{{ variant.compare_at_price | money }}</s>{%-endif-%}</h4>
         <p>{{ variant.metafields.global.variantdescription }}</p>
         <p class="remaining">{{ variant.inventory_quantity}} of {{ variant.metafields.global.totalquantity }} remaining</p>
-        {%-assign vc = vc | plus: 1-%}
+        {%-assign vc = vc | plus: 1-%} 
         <div class="ribbon">Selected</div>
       </div>
     {% endfor %}
