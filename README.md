@@ -55,11 +55,11 @@ Note: The included `snippets/product-template.liquid` file is based off the "Sim
 
 I've tried to make this as simple as possible to install / setup without it being a plugin (hence affording you the most flexibility / necessary modifications). 
 
-1. Place `camapign.liquid` into your template `snippets` folder. 
+1. Place `campaign.liquid` into your template `snippets` folder. 
 2. Place `campaign.scss` into your template `assets` folder.
 3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `layout/theme.liquid`.
-4. Backup your `sections/product-template.liquid` file and replace with the included `sections/product-template.liquid` 
-5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder
+4. Backup your `sections/product-template.liquid` file and replace with the included `sections/product-template.liquid`. 
+5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder.
 6. Add the following CSS to `assets/theme.scss.liquid`: 
 
 ```
