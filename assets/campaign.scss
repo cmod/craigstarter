@@ -6,230 +6,227 @@
 */
 
 
-
 /*  ==========================================================
     Tier design — to make those fancy tier buttons and "selected" states
 */
-    .tiertop { 
-      border-top: 0px solid #ddd; 
-      margin-top: 30px;
-      padding-top: 30px;
-      text-align: center;
-      }
 
-    .tier { 
-      border: 3px solid #EDE6E3;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      background-color: #EDE6E3;
-      padding: 10px;
-      overflow: hidden;
-      position: relative;
+$color-white: #fff;
+$color-soldout: #aaa;
+$color-soldout-bg: #dcdcdc;
+$color-progress-default: #1626f5;
+$color-progress-pending: #dfdfdf;
+$color-progress-complete: #a1eca3;
 
-      &.soldout { 
-        background-color: #dcdcdc; border-color: #dcdcdc; color: #aaa; 
-        h3 { color: #aaa; }
-        h4 { color: #aaa; }
-        &:hover { border-color: #dcdcdc; cursor: default; }
+.tiertop {
+    border-top: 0 solid #ddd;
+    margin-top: 30px;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.tier {
+    border: 3px solid #EDE6E3;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #EDE6E3;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    &.soldout {
+        background-color: $color-soldout-bg;
+        border-color: $color-soldout-bg;
+        color: $color-soldout;
+        h3,
+        h4 {
+            color: $color-soldout;
         }
-
-      h3 { font-family: sans-serif; font-weight: bold; }
-      h4 { font-family: sans-serif; text-transform: none; }
-
-      .remaining { color: #888; }
-
-      &:hover { cursor: pointer; border-color: #ded5d1; }
-
-      &.active { 
-        border-color: #ded5d1; 
-        background-color: #f7f2f0; 
-        
+        &:hover {
+            border-color: $color-soldout-bg;
+            cursor: default;
+        }
+    }
+    h3 {
+        font-family: sans-serif;
+        font-weight: bold;
+    }
+    h4 {
+        font-family: sans-serif;
+        text-transform: none;
+    }
+    .remaining {
+        color: #888;
+    }
+    &:hover {
+        cursor: pointer;
+        border-color: #ded5d1;
+    }
+    &.active {
+        border-color: #ded5d1;
+        background-color: #f7f2f0;
         .ribbon {
-          margin: 0;
-          padding: 0;
-          background: #7f00ff;
-          color:white;
-          padding: .2em 0;
-          font-size: .8em;
-          position: absolute;
-          top:0;
-          right:0;
-          transform: translateX(30%) translateY(0%) rotate(45deg);
-          transform-origin: top left;
-          display: block;
+            margin: 0;
+            padding: 0;
+            background: #7f00ff;
+            color: $color-white;
+            padding: .2em 0;
+            font-size: .8em;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translateX(30%) translateY(0%) rotate(45deg);
+            transform-origin: top left;
+            display: block;
         }
         .ribbon:before,
         .ribbon:after {
-          content: '';
-          position: absolute;
-          top:0;
-          margin: 0 -1px; /* tweak */
-          width: 100%;
-          height: 100%;
-          background: #7f00ff;
+            content: '';
+            position: absolute;
+            top: 0;
+            margin: 0 -1px;
+            /* tweak */
+            width: 100%;
+            height: 100%;
+            background: #7f00ff;
         }
         .ribbon:before {
-          right:100%;
+            right: 100%;
         }
-
         .ribbon:after {
-          left:100%;
+            left: 100%;
         }
-      }
+    }
+    .ribbon {
+        display: none;
+    }
+}
 
-      .ribbon { display: none; }
-
-      }
-
-
-    .compared { font-weight: normal; font-size: .8em; }
-
+.compared {
+    font-weight: normal;
+    font-size: .8em;
+}
 
 
 /*  ==========================================================
     Fancy goals box above tiers
 */
-    .craigstarter {
-      clear: both;
-      padding: 10px;
-      background-color: #f7f7f7;
-      color: #333;
-      margin-bottom:20px;
-      border-radius: 5px;
 
-      .totalsold { 
+.craigstarter {
+    clear: both;
+    padding: 10px;
+    background-color: #f7f7f7;
+    color: #333;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    .totalsold {
         font-weight: normal;
-       }
-
-      .daysleft {
+    }
+    .daysleft {
         font-size: 2rem;
         line-height: .9em;
         display: block;
         color: #353442;
         margin-bottom: 30px;
-        margin-top: 0px;
-      }
-
-
-      progress {  
+        margin-top: 0;
+    }
+    progress {
         height: 35px;
         width: 100%;
         position: relative;
-        background-color: #fff;
+        background-color: $color-white;
         overflow: hidden;
-        border: 1px solid #ffffff;
+        border: 1px solid $color-white;
         border-radius: 4px;
-        }
-
-      progress::-webkit-progress-bar {
-        background-color: #fff;
+    }
+    progress::-webkit-progress-bar {
+        background-color: $color-white;
         border-radius: 4px;
-        }
-
-      progress::-webkit-progress-value {
-        background-color: #1626f5;
+    }
+    progress::-webkit-progress-value {
+        background-color: $color-progress-default;
         transition: width 2.0s ease;
         border-radius: 4px;
-        }
-
-      progress::-moz-progress-bar {
-        background-color: #1626f5;
+    }
+    progress::-moz-progress-bar {
+        background-color: $color-progress-default;
         border-radius: 4px;
-        }
-
-      .g-meter {
+    }
+    .g-meter {
         height: 35px;
         width: 100%;
         position: relative;
-        background-color: #fff;
+        background-color: $color-white;
         overflow: hidden;
-        border: 1px solid #ffffff;
+        border: 1px solid $color-white;
         border-radius: 4px;
-       
         span {
-          display: block;
-          height: 100%;
-          width: 0;
-          background-color: #1626f5;
-          position: absolute;
-          top: 0; left: 0;
-          overflow: hidden;
-          border-radius: 3px;
+            display: block;
+            height: 100%;
+            width: 0;
+            background-color: $color-progress-default;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            border-radius: 3px;
         }
-      }
-
-      .g-label {
+    }
+    .g-label {
         font-weight: bold;
         margin-top: -10px;
         margin-bottom: 15px;
         font-size: .9em;
-      }
-
-      .pending {  
-        progress { 
-          height: 24px;
-          }
-
-        progress::-webkit-progress-value {
-          background-color: #dfdfdf;
-          }
-
-        progress::-moz-progress-bar {
-          background-color: #dfdfdf;
-          }
-
-        .g-meter {
-          height: 24px;
-          span {
-            background-color: #dfdfdf;
-          }
-        }
-        .g-label { 
-          color: #dfdfdf;
-          font-weight: normal;
-        }  
-      }
-
-      .complete {
-        progress {
-          height: 24px;
-          }
-
-        progress::-webkit-progress-value {
-          background-color: #a1eca3;
-          }
-
-        progress::-moz-progress-bar {
-          background-color: #a1eca3;
-          }
-
-        .g-meter {
-          height: 24px;
-          span {
-            background-color: #a1eca3;
-            text-align: right;
-            max-width: 100%;
-            padding-right: 5px;
-          }
-          .checkmark { 
-            color: #fff;
-            display: inline-block;
-            
-            text-align: right;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            font-size: .8em;
-            line-height: 20px;
-            width: 100%;
-          }
-        }
-      }
     }
+    .pending {
+        progress {
+            height: 24px;
+        }
+        progress::-webkit-progress-value,
+        progress::-moz-progress-bar {
+            background-color: $color-progress-pending;
+        }
+        .g-meter {
+            height: 24px;
+            span {
+                background-color: $color-progress-pending;
+            }
+        }
+        .g-label {
+            color: $color-progress-pending;
+            font-weight: normal;
+        }
+    }
+    .complete {
+        progress {
+            height: 24px;
+        }
+        progress::-webkit-progress-value,
+        progress::-moz-progress-bar {
+            background-color: $color-progress-complete;
+        }
+        .g-meter {
+            height: 24px;
+            span {
+                background-color: $color-progress-complete;
+                text-align: right;
+                max-width: 100%;
+                padding-right: 5px;
+            }
+            .checkmark {
+                color: $color-white;
+                display: inline-block;
+                text-align: right;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: bold;
+                font-size: .8em;
+                line-height: 20px;
+                width: 100%;
+            }
+        }
+    }
+}
 
-
-	.hideme { display: none; }
-
-	.campaignform .selector-wrapper { display: none; }
-
-	
+.hideme,
+.campaignform .selector-wrapper {
+    display: none;
+}
