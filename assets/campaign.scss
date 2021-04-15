@@ -97,6 +97,8 @@
       margin-bottom:20px;
       border-radius: 5px;
 
+      &.campaigndone { opacity: .4; }
+
       .totalsold { 
         font-weight: normal;
        }

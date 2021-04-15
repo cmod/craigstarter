@@ -103,7 +103,7 @@
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} GENERATE HTML                                           {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
-  <section class="craigstarter">
+  <section class="craigstarter{%if hoursUntilDone <= 0%} campaigndone{%-endif-%}"> 
     <p><span class="totalsold"><strong>{{totalSold}}</span> backers</strong> ({{totalRevenue | money}})</p>
     
     {%-if hoursUntilDone <= 0-%}
