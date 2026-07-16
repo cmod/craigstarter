@@ -41,10 +41,11 @@
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} SETUP general                                           {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
-  {%-assign currentDate    = "now" | date: "%s"-%}
-  {%-assign endDate        = product.metafields.global.campaignenddate-%}
-  {%-assign daysUntilDone  = endDate | date: "%s" | minus: currentDate | divided_by: 3600 | divided_by: 24 | round  -%}
-  {%-assign hoursUntilDone = endDate | date: "%s" | minus: currentDate | divided_by: 3600 -%}
+  {%-assign currentDate      = "now" | date: "%s"-%}
+  {%-assign endDate          = product.metafields.global.campaignenddate-%}
+  {%-assign secondsUntilDone = endDate | date: "%s" | minus: currentDate -%}
+  {%-assign daysUntilDone    = secondsUntilDone | divided_by: 86400 -%}
+  {%-assign hoursUntilDone   = secondsUntilDone | divided_by: 3600 -%}
 
   {%-if debug-%}
     days until done: {{ daysUntilDone }}<br />
@@ -55,14 +56,11 @@
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} SETUP goals                                             {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
-  {%-assign totalAvail = product.metafields.global.totalavailableproducts-%}
-
   {%-assign goals       = product.metafields.global.goalamounts | split:','-%}
   {%-assign goalText    = product.metafields.global.goaltext | split:','-%}
   {%-assign goalTextComplete    = product.metafields.global.goaltextcomplete | split:','-%}
   {%-comment-%}========================================================={%-endcomment-%}
 
-  {%-assign count         = 0-%}
   {%-assign totalSold     = 0-%}
   {%-assign totalRevenue  = 0-%}
 
@@ -82,15 +80,13 @@
 
     {%if debug-%}
       {%-comment-%}{{ variant | json }}{%-endcomment-%}
-      Loop count: {{ count }}<br />
+      Loop count: {{ forloop.index0 }}<br />
       Variant quantity remaining: {{ variant.inventory_quantity }}<br />
       Variant total quant: {{ variant.metafields.global.totalquantity }}<br />
       sold: {{ variantSales }}<br />
       variantBucks: {{ variantBucks }}<br />
       ------ <br />
     {%-endif%}
-
-    {%-assign count = count | plus: 1-%}
   {%-endfor%}
   {%-if debug-%}
     Total Sold: {{ totalSold }}<br />
@@ -103,15 +99,17 @@
   {%-comment-%}========================================================={%-endcomment-%}
   {%-comment-%} GENERATE HTML                                           {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}
-  <section class="craigstarter{%if hoursUntilDone <= 0%} campaigndone{%-endif-%}"> 
-    <p><span class="totalsold"><strong>{{totalSold}}</span> backers</strong> ({{totalRevenue | money}})</p>
-    
-    {%-if hoursUntilDone <= 0-%}
-      <p>Pre-sale campaign is done!</p>
+  <section class="craigstarter{%if secondsUntilDone <= 0%} campaigndone{%-endif-%}">
+    <p class="totalsold"><strong>{{totalSold}} backers</strong> ({{totalRevenue | money}})</p>
+
+    {%-if secondsUntilDone <= 0-%}
+      <p class="campaigndonemessage">Pre-sale campaign is done!</p>
     {%-else-%}
       <p>
         <strong>
-          {%-if hoursUntilDone < 24-%}
+          {%-if hoursUntilDone < 1-%}
+            Less than 1 hour
+          {%-elsif hoursUntilDone < 24-%}
             {%-if hoursUntilDone == 1-%}
               {{ hoursUntilDone }} hour
             {%-else-%}
@@ -133,21 +131,24 @@
 
     {%-assign gcount = 0-%}
     {%-assign gactive = 0-%}
-    {%-assign gpercentcatpure = ""-%}
+    {%-assign gpercentcapture = ""-%}
 
     {%-for g in goals-%}
-      {%-assign gpercent = totalSold | times: 100 | divided_by: g -%}
-      
-      {%-assign gpercentcatpure = gpercentcatpure | append: gpercent | append: ", " -%}
-      
+      {%-comment-%} Skip blank / zero goals (e.g. a stray trailing comma) to avoid division by zero {%-endcomment-%}
+      {%-assign gnum = g | plus: 0-%}
+      {%-if gnum <= 0-%}{%-continue-%}{%-endif-%}
+      {%-assign gpercent = totalSold | times: 100 | divided_by: gnum -%}
+
+      {%-assign gpercentcapture = gpercentcapture | append: gpercent | append: ", " -%}
+
       <div class="g-wrap{% if gpercent < 100 and gactive == gcount %} active {% elsif gactive == gcount and gpercent >= 100 %} complete{% elsif gactive < gcount %} pending{%endif%}">
-        <progress max="100" value="0" class="goal-{{ gcount }}">
+        <progress max="100" value="0" class="goal-{{ gcount }}" aria-label="{{ gpercent }}% {{ goalText[gcount] | strip | escape }}">
           <div class="g-meter">
             <span style="width: {{ gpercent }}%;">{% if gactive == gcount and gpercent >= 100 %}<span class="checkmark">Complete!</span>{%endif%}</span>
           </div>
         </progress>
 
-        <div class="g-label">{%- if gpercent >= 100 -%}{{ goalTextComplete[gcount]}}{%- else -%}{{totalSold | times: 100 | divided_by: g }}% {{ goalText[gcount]}}{%- endif -%}</div>
+        <div class="g-label">{%- if gpercent >= 100 -%}{{ goalTextComplete[gcount]}}{%- else -%}{{ gpercent }}% {{ goalText[gcount]}}{%- endif -%}</div>
         {%- if gpercent >= 100 -%}{%-assign gactive = gcount | plus:1 -%}{%endif%}
         {%-assign gcount = gcount | plus:1-%}
       </div>
@@ -158,16 +159,17 @@
     <span style="font-size: .8em;">Powered by <a href="https://github.com/cmod/craigstarter">craigstarter</a>.</span>
   </section>
 
-  <script> 
-    document.addEventListener("DOMContentLoaded", function(e) {
+  {%- if gcount > 0 -%}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
       {%-assign max       = gcount | minus: 1 -%}
-      {%-assign gpercents = gpercentcatpure | split:',' -%}
+      {%-assign gpercents = gpercentcapture | split:',' -%}
       {% for counter in (0..max) %}
         document.querySelector("progress.goal-{{counter}}").value = {{ gpercents[counter] }};
       {%endfor%}
-      });
-      
+    });
   </script>
+  {%- endif -%}
   
 
 
@@ -175,14 +177,13 @@
   {%-comment-%} Build the Tiers                                         {%-endcomment-%}
   {%-comment-%}========================================================={%-endcomment-%}  
   <h2 class="tiertop">Select your Tier</h2>
-    {%-assign vc = 0%}
+    {%-assign initialVariant = product.selected_or_first_available_variant-%}
     {% for variant in product.variants %}
-      <div class="tier variant-{{variant.id}}{%if variant.inventory_quantity <= 0%} soldout{%endif%}" {%if variant.inventory_quantity > 0%}onclick="updateTier({{variant.id}})"{%endif%}>
-        <h3>{{ variant.title }}{%if variant.inventory_quantity == 0%} (Sold Out){%endif%}</h3>
+      <div class="tier variant-{{variant.id}}{%if variant.inventory_quantity <= 0%} soldout{%endif%}{%if variant.id == initialVariant.id and variant.inventory_quantity > 0%} active{%endif%}" {%if variant.inventory_quantity > 0%}role="button" tabindex="0" onclick="updateTier({{variant.id}})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();updateTier({{variant.id}});}"{%endif%}>
+        <h3>{{ variant.title }}{%if variant.inventory_quantity <= 0%} (Sold Out){%endif%}</h3>
         <h4>{{ variant.price | money }} {%-if variant.compare_at_price-%}<s class="compared">{{ variant.compare_at_price | money }}</s>{%-endif-%}</h4>
         <p>{{ variant.metafields.global.variantdescription }}</p>
         <p class="remaining">{{ variant.inventory_quantity}} of {{ variant.metafields.global.totalquantity }} remaining</p>
-        {%-assign vc = vc | plus: 1-%} 
         <div class="ribbon">Selected</div>
       </div>
     {% endfor %}
@@ -193,10 +194,14 @@
     {%-comment-%}========================================================={%-endcomment-%}
     <script>
       function updateTier(variantId) {
-        console.log(variantId);
-        $('#ProductSelect-product-template option').removeAttr('selected').filter('[value='+variantId+']').prop('selected', true);
-        $('.tier').removeClass('active');
-        $('.variant-'+variantId).addClass('active');
+        var select = document.querySelector('.campaignform select[name="id"]') || document.querySelector('select.product-single__variants');
+        if (select) {
+          select.value = variantId;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        document.querySelectorAll('.tier').forEach(function (tier) {
+          tier.classList.toggle('active', tier.classList.contains('variant-' + variantId));
+        });
       }
     </script>
 

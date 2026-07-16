@@ -32,11 +32,11 @@
     <div class="grid__item medium-up--one-whole titles">
       <div class="small-only">
       <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
-      
-    {% if product.metafields.global.subtitle %}
+
+    {% if product.metafields.global.subtitle != blank %}
       <h2 class="subtitle">{{ product.metafields.global.subtitle }}</h2>
     {% endif %}
-    {% if product.metafields.global.author %}
+    {% if product.metafields.global.author != blank %}
       <h2 class="author">{{ product.metafields.global.author }}</h2>
     {% endif %}
       </div>
@@ -110,10 +110,10 @@
       <div class="product-single__meta small--text-center">
         <div class="medium-only">
         <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
-        {% if product.metafields.global.subtitle %}
+        {% if product.metafields.global.subtitle != blank %}
           <h2 class="subtitle">{{ product.metafields.global.subtitle }}</h2>
         {% endif %}
-        {% if product.metafields.global.author %}
+        {% if product.metafields.global.author != blank %}
           <h2 class="author">{{ product.metafields.global.author }}</h2>
         {% endif %}
 

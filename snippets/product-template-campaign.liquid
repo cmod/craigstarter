@@ -24,11 +24,11 @@
   <div class="grid product-single {{ product.handle }}">
 
     <div class="grid__item medium-up--one-whole titles">
-      <h1 class="product-single__title" {% if product.metafields.global.fundingcampaign == "true" and product.metafields.global.subtitle == ''%} style="margin-bottom: 15px;" {% endif %} itemprop="name">{{ product.title }}</h1>
-      {% if product.metafields.global.subtitle %}
+      <h1 class="product-single__title" {% if product.metafields.global.fundingcampaign == "true" and product.metafields.global.subtitle == blank %} style="margin-bottom: 15px;" {% endif %} itemprop="name">{{ product.title }}</h1>
+      {% if product.metafields.global.subtitle != blank %}
       <h2 class="subtitle">{{ product.metafields.global.subtitle }}</h2>
       {% endif %}
-      {% if product.metafields.global.author %}
+      {% if product.metafields.global.author != blank %}
       <h2 class="author">{{ product.metafields.global.author }}</h2>
       {% endif %}
 

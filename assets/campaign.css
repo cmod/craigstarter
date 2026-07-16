@@ -1,0 +1,232 @@
+/*  =============================
+    Style up the campaign
+*/
+
+/* Hides the raw variant <select> that the tier boxes drive */
+.hideme { display: none; }
+
+/* Show / hide the desktop vs mobile product description blocks.
+   Breakpoint matches the 989px cutoff used in the product templates. */
+@media only screen and (max-width: 989px) {
+  .medium-only { display: none; }
+}
+
+@media only screen and (min-width: 990px) {
+  .small-only { display: none; }
+}
+
+
+/*  =============================
+    Tiers
+*/
+
+.tiertop {
+  border-top: 0 solid #ddd;
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
+}
+
+.tier {
+  border: 3px solid #EDE6E3;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background-color: #EDE6E3;
+  padding: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tier h3 { font-family: sans-serif; font-weight: bold; }
+.tier h4 { font-family: sans-serif; text-transform: none; }
+
+.tier .remaining { color: #888; }
+
+.tier:hover { cursor: pointer; border-color: #ded5d1; }
+
+.tier:focus-visible { outline: 2px solid #7f00ff; outline-offset: 2px; }
+
+.tier.soldout {
+  background-color: #dcdcdc;
+  border-color: #dcdcdc;
+  color: #aaa;
+}
+
+.tier.soldout h3,
+.tier.soldout h4 { color: #aaa; }
+
+.tier.soldout:hover { border-color: #dcdcdc; cursor: default; }
+
+.tier.active {
+  border-color: #ded5d1;
+  background-color: #f7f2f0;
+}
+
+.tier .ribbon { display: none; }
+
+.tier.active .ribbon {
+  margin: 0;
+  padding: .2em 0;
+  background: #7f00ff;
+  color: white;
+  font-size: .8em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(30%) translateY(0%) rotate(45deg);
+  transform-origin: top left;
+  display: block;
+}
+
+.tier.active .ribbon:before,
+.tier.active .ribbon:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  margin: 0 -1px; /* tweak */
+  width: 100%;
+  height: 100%;
+  background: #7f00ff;
+}
+
+.tier.active .ribbon:before { right: 100%; }
+
+.tier.active .ribbon:after { left: 100%; }
+
+.compared { font-weight: normal; font-size: .8em; }
+
+
+/*  =============================
+    Campaign box: goals + progress
+*/
+
+.craigstarter {
+  clear: both;
+  padding: 10px;
+  background-color: #f7f7f7;
+  color: #333;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.craigstarter.campaigndone { opacity: .4; }
+
+.craigstarter .campaigndonemessage {
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 1px dotted #666;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+}
+
+.craigstarter .campaigndonemessage a { text-decoration: underline; font-weight: bold; }
+
+.craigstarter .totalsold { font-weight: normal; }
+
+.craigstarter .daysleft {
+  font-size: 2rem;
+  line-height: .9em;
+  display: block;
+  color: #353442;
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+
+.craigstarter progress {
+  height: 35px;
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+}
+
+.craigstarter progress::-webkit-progress-bar {
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.craigstarter progress::-webkit-progress-value {
+  background-color: #1626f5;
+  transition: width 2.0s ease;
+  border-radius: 4px;
+}
+
+.craigstarter progress::-moz-progress-bar {
+  background-color: #1626f5;
+  border-radius: 4px;
+  transition: width 2.0s ease;
+}
+
+.craigstarter .g-meter {
+  height: 35px;
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+}
+
+.craigstarter .g-meter span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background-color: #1626f5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.craigstarter .g-label {
+  font-weight: bold;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-size: .9em;
+}
+
+.craigstarter .pending progress { height: 24px; }
+
+.craigstarter .pending progress::-webkit-progress-value { background-color: #dfdfdf; }
+
+.craigstarter .pending progress::-moz-progress-bar { background-color: #dfdfdf; }
+
+.craigstarter .pending .g-meter { height: 24px; }
+
+.craigstarter .pending .g-meter span { background-color: #dfdfdf; }
+
+.craigstarter .pending .g-label {
+  color: #9e9e9e;
+  font-weight: normal;
+}
+
+.craigstarter .complete progress { height: 24px; }
+
+.craigstarter .complete progress::-webkit-progress-value { background-color: #a1eca3; }
+
+.craigstarter .complete progress::-moz-progress-bar { background-color: #a1eca3; }
+
+.craigstarter .complete .g-meter { height: 24px; }
+
+.craigstarter .complete .g-meter span {
+  background-color: #a1eca3;
+  text-align: right;
+  max-width: 100%;
+  padding-right: 5px;
+}
+
+.craigstarter .complete .g-meter .checkmark {
+  color: #fff;
+  display: inline-block;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: .8em;
+  line-height: 20px;
+  width: 100%;
+}

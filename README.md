@@ -51,28 +51,17 @@ In the end, if you have an audience, and you have reasonable baseline goals, the
 
 ## Installing
 
-Note: The included `snippets/product-template.liquid` file is based off the "Simple" Shopify theme. You'll have to modify your own `product-template.liquid` file if you're using a different theme. 
+Note: The included `sections/product-template.liquid` file is based off the "Simple" Shopify theme. You'll have to modify your own `product-template.liquid` file if you're using a different theme. 
 
 I've tried to make this as simple as possible to install / setup without it being a plugin (hence affording you the most flexibility / necessary modifications). 
 
-1. Place `campaign.liquid` into your template `snippets` folder. 
-2. Place `campaign.scss` into your template `assets` folder.
-3. Add `{{ 'campaign.scss.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `layout/theme.liquid`.
+1. Place `campaign.liquid` into your theme's `snippets` folder. 
+2. Place `campaign.css` into your theme's `assets` folder.
+3. Add `{{ 'campaign.css' | asset_url | stylesheet_tag }}` between the `<head> </head>` tags in `layout/theme.liquid`.
 4. Backup your `sections/product-template.liquid` file and replace with the included `sections/product-template.liquid`. 
 5. Place `snippets/product-template-campaign.liquid` and `snippets/product-template-general.liquid` into your `snippets` folder.
-6. Add the following CSS to the end of `assets/theme.scss.liquid`: 
 
-```
-@include media-query($medium-down) {
-  .medium-only { display: none; }
-}
-
-@include media-query($medium-up) {
-  .small-only { display: none; }
-}
-```
-
-That CSS will hide and show the proper `div` for product description for desktop / mobile. 
+The stylesheet is plain CSS (Shopify deprecated Sass compilation in themes back in 2020). It also includes the `.medium-only` / `.small-only` rules that show / hide the proper `div` for product description on desktop / mobile — no theme stylesheet edits needed.
 
 ##### Notes: 
 If you want to add the campaign bar to your own template, the campaign sidebar is rendered using the following line in product-template: 
@@ -106,6 +95,10 @@ All variables used by the Craigstarter snippet to run a campaign are set using a
 
 `campaigninfo:` text blob appearing below goals, can contain html, et cetera
 
+`subtitle:` (optional) subtitle displayed beneath the product title
+
+`author:` (optional) author name displayed beneath the subtitle
+
 #### Variants Metafields
 
 `variantdescription:` The extended description appearing in the selection box
@@ -116,9 +109,14 @@ All variables used by the Craigstarter snippet to run a campaign are set using a
 ----
 
 ## Metafield editing
+
+Shopify now supports metafields natively in the admin — no plugin needed. Go to **Settings → Custom data**, and create definitions for **Products** and **Variants** using the field names above, with namespace and key like `global.fundingcampaign`, `global.goalamounts`, and so on. Use the **Single line text** type for all of them (the templates read them as plain strings; `campaigninfo` can be **Multi-line text**). Once defined, the fields appear at the bottom of every product / variant page in the admin, ready to be filled in.
+
+#### Bulk editor shortcut
+
 ![metafields](screenshots/metafields.jpg)
 
-Shopify sneakily provides a way to easily edit metafields without a plugin using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own Metafields editor with the appropriate fields ready to be filled in. 
+Alternatively (and handy for editing many variants at once), Shopify's bulk editor can edit metafields directly using the following url structure. Change the YOURSHOP part of the url to your own shop url snippet, and these URLs should load up Shopify's own bulk editor with the appropriate fields ready to be filled in. 
 
 Save these URLs as bookmarks to edit / modify as needed. 
 
@@ -143,5 +141,4 @@ Save these URLs as bookmarks to edit / modify as needed.
 ## Todo
 
 - Setup monetary goals (right now it's just unit sales to keep it simple)
-- Clean up javascript to be more elegant
 - Have "add to cart" button appear below selected tier in elegant way
